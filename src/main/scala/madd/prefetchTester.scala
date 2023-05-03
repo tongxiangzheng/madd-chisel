@@ -18,7 +18,7 @@ class PrefetchTester(dut: Prefetch)
 }
 
 object PrefetchTester extends App {
-  chisel3.iotesters.Driver(() => new prefetch(3, 2)) { dut =>
-    new prefetchTester(dut)
+  chisel3.iotesters.Driver(() => new Prefetch(3, 2)) { dut =>
+    new PrefetchTester(dut)
   }
 }
