@@ -10,9 +10,9 @@ class prefetchTester(dut: prefetch)
     poke(dut.io.a(i), i)
     poke(dut.io.b(i), i)
   }
-  step(1)
+  //step(1)
   for (i <- 0 until 3 * 2) {
-    print(peek(dut.io.out(i)).toString+' ')
+    //print(peek(dut.io.out(i)).toString+' ')
     expect(dut.io.out(i), i * 2)
   }
 }
