@@ -4,7 +4,7 @@ import chisel3._
 import chisel3.iotesters.PeekPokeTester
 import chisel3.util._
 
-class PrefetchTester(dut: prefetch)
+class PrefetchTester(dut: Prefetch)
     extends PeekPokeTester(dut) {
   for (i <- 0 until 3 * 2) {
     poke(dut.io.a(i), i)
