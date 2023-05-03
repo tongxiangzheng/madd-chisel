@@ -24,7 +24,7 @@ object prefetch extends App {
   (new ChiselStage).execute(
     Array("-X", "verilog", "-td", "source/"),
     Seq(
-      ChiselGeneratorAnnotation(() => new MatrixAddition1(3, 2))
+      ChiselGeneratorAnnotation(() => new prefetch(3, 2))
     )
   )
 }
