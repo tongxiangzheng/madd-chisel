@@ -12,8 +12,7 @@ class prefetchTester(dut: prefetch)
   }
   step(1)
   for (i <- 0 until 3 * 2) {
-    print(dut.io.out(i))
-    print(' ')
+    print(peek(dut.io.out(i)).toString+' ')
     expect(dut.io.out(i), i * 2)
   }
 }
