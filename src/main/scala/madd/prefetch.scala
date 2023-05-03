@@ -4,8 +4,8 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
-class prefetch(M: Int, N: Int) extends Module {
-  val io = IO(new prefetchIO(M, N))
+class Prefetch(M: Int, N: Int) extends Module {
+  val io = IO(new PrefetchIO(M, N))
 
   io.out := DontCare
 
@@ -20,11 +20,11 @@ class prefetch(M: Int, N: Int) extends Module {
   }
 }
 
-object prefetch extends App {
+object Prefetch extends App {
   (new ChiselStage).execute(
     Array("-X", "verilog", "-td", "source/"),
     Seq(
-      ChiselGeneratorAnnotation(() => new prefetch(3, 2))
+      ChiselGeneratorAnnotation(() => new Prefetch(3, 2))
     )
   )
 }
