@@ -8,7 +8,7 @@ class FIFOTester(dut: FIFO)
     extends PeekPokeTester(dut) {
 
   poke(dut.io.enIn,true.B)
-  poke(dut.io.strideIn,0.S(addressWidth.W+1))
+  poke(dut.io.strideIn,0.S(dut.addressWidth.W+1))
   step(1)
   expect(dut.io.find, true.B)
 
