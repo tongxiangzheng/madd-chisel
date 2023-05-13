@@ -6,15 +6,8 @@ import chisel3.util._
 
 class PrefetchTester(dut: Prefetch)
     extends PeekPokeTester(dut) {
-  /*for (i <- 0 until 3 * 2) {
-    poke(dut.io.a(i), i)
-    poke(dut.io.b(i), i)
-  }
-  step(1)
-  for (i <- 0 until 3 * 2) {
-    print(peek(dut.io.out(i)).toString+' ')
-    expect(dut.io.out(i), i * 2)
-  }*/
+  poke(dut.io.pc, 1)
+  expect(dut.io.prefetch_valid, true.B)
 }
 
 object PrefetchTester extends App {
