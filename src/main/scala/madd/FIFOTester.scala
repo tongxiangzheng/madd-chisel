@@ -19,7 +19,7 @@ class FIFOTester(dut: FIFO)
 }
 
 object FIFOTester extends App {
-  chisel3.iotesters.Driver(() => new FIFO(32, 32)) { dut =>
+  chisel3.iotesters.Driver(() => new FIFO(64,32, 32)) { dut =>
     new FIFOTester(dut)
   }
 }

@@ -6,8 +6,6 @@ import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
 class Prefetch(val pcWidth: UInt,val addressWidth: UInt) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
-  val dataArray = RegInit(VecInit(Seq.fill(assoc * numSets)(0.U((blockSizeInBytes * 8).W))))
-  val regB = Reg(SInt(32.W))
   
 }
 
