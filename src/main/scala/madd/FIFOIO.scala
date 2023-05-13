@@ -9,7 +9,7 @@ class FIFOIO(val pcWidth: Int, val addressWidth: Int) extends Bundle {
     val pcIn = Input(UInt(pcWidth.W))
 	val enWrite = Input(Bool())
 	val addressIn = Input(UInt(addressWidth.W))
-    val strideIn = Output(SInt(addressWidth.W+1))
+    val strideIn = Input(SInt(addressWidth.W+1))
 	
     // 输出端口
     val addressOut = Output(UInt(addressWidth.W))
