@@ -11,7 +11,7 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
 }
 
 class FIFO(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module {
-  val io = IO(new PrefetchIO(pcWidth,addressWidth))
+  val io = IO(new FIFOIO(pcWidth,addressWidth))
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	queueWire(i).pc=0.U(pcWidth.W)
