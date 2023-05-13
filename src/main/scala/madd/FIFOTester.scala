@@ -7,10 +7,11 @@ import chisel3.util._
 class FIFOTester(dut: FIFO)
     extends PeekPokeTester(dut) {
 
-  dut.io.enIn=true.B
+  poke(dut.io.enIn,true.B)
   step(1)
   expect(dut.io.find, true.B)
-  dut.io.enIn=false.B
+
+  poke(dut.io.enIn,false.B)
   step(1)
   expect(dut.io.find, false.B)
   
