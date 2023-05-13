@@ -4,13 +4,13 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
-class ItemData(val pcWidth: UInt,val addressWidth: UInt) extends Bundle {
+class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
     val pc = UInt(pcWidth.W)
     val address = UInt(addressWidth.W)
-	val stride = SInt(addressWidth.W+1.W) //SInt 记得大小加一
+	val stride = SInt(addressWidth.W+1) //SInt 记得大小加一
 }
 
-class FIFO(val size: UInt,val pcWidth: UInt,val addressWidth: UInt) extends Module {
+class FIFO(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {

@@ -3,7 +3,7 @@ package madd
 import chisel3._
 import chisel3.util._
 
-class FIFOIO(val pcWidth: UInt, val addressWidth: UInt) extends Bundle {
+class FIFOIO(val pcWidth: Int, val addressWidth: Int) extends Bundle {
     // 输入端口
     val enIn = Input(Bool())
     val pcIn = Input(UInt(pcWidth.W))
