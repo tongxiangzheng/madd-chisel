@@ -21,8 +21,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   }
   val queueReg = RegInit(queueWire)
 
-  io.prefetch_address=DontCare
-  io.prefetch_valid=true.B
+  io.prefetch_address:=DontCare
+  io.prefetch_valid:=true.B
 }
 
 object Prefetch extends App {
