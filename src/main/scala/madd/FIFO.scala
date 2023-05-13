@@ -7,7 +7,7 @@ import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 class ItemData(val pcWidth: UInt,val addressWidth: UInt) extends Bundle {
     val pc = UInt(pcWidth.W)
     val address = UInt(addressWidth.W)
-	val stride = SInt(addressWidth.W+1.U)) //SInt
+	val stride = SInt(addressWidth.W)) //SInt
 }
 
 class FIFO(val size: UInt,val pcWidth: UInt,val addressWidth: UInt) extends Module {
