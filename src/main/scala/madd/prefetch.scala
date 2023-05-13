@@ -5,24 +5,66 @@ import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
 class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
-    val pc = UInt(pcWidth.W)
-    val address = UInt(addressWidth.W)
+  val pc = UInt(pcWidth.W)
+  val address = UInt(addressWidth.W)
 	val stride = SInt(addressWidth.W+1) //SInt 记得大小加一
+  val timestamp = Uint(32.W)
 }
 
 class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   val size = 64
+  var dfn = 0.U(32.W)
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
 	  queueWire(i).address:=0.U(addressWidth.W)
 	  queueWire(i).stride:=0.S(addressWidth.W+1)
+    queueWire(i).timestamp:=0.U(32.W)
   }
   val queueReg = RegInit(queueWire)
 
   io.prefetch_address:=DontCare
   io.prefetch_valid:=true.B
+
+  def fifoFind(pc: UInt):UInt = {
+    for(i< 0 until size){
+      if(queueReg(i).pc===0){
+        continue;
+      }
+      if(queueReg(i).pc==pc){
+        i
+      }
+    }
+    size
+  }
+  def fifoWrite(pc:UInt,address:UInt,stride:UInt):Unit = {
+    var p=0
+    var found=false.B
+    for(i< 0 until size){
+      val check=(queueReg(i).pc==pc)
+      check=Mux(found,0,check)
+      found=Mux(check,true.B,found)
+      p=Mux(check,i,p)
+    }
+    for(i< 0 until size){
+      val check=(queueReg(i).pc==0)
+      check=Mux(found,0,check)
+      found=Mux(check,true.B,found)
+      p=Mux(check,i,p)
+    }
+    for(i< 0 until size){
+      val check=(dfn-queueReg(i).timestamp>dfn-queueReg(p).timestamp)
+      check=Mux(found,0,check)
+      p=Mux(check,i,p)
+    }
+    queueReg(p).pc:=pc
+    
+    queueReg(p).address:=address
+    queueReg(p).stride:=stride
+    dfn:=dfn+1
+    queueReg(p).timestamp:=dfn
+  }
 }
 
 object Prefetch extends App {
