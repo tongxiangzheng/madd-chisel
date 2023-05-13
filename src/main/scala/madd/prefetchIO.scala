@@ -3,12 +3,12 @@ package madd
 import chisel3._
 import chisel3.util._
 
-class PrefetchIO(val pcWidth: UInt,val addressWidth: UInt) extends Bundle {
+class PrefetchIO(val pcWidth: Int,val addressWidth: Int) extends Bundle {
     // 输入端口
-    val pc = Input(UInt(pcWidth))
-    val address = Input(UInt(addressWidth))
+    val pc = Input(UInt(pcWidth.W))
+    val address = Input(UInt(addressWidth.W))
     // 输出端口
-    val prefetch_address = Output(UInt(addressWidth))
+    val prefetch_address = Output(UInt(addressWidth.W))
     val prefetch_valid = Output(Bool())
 
   override def cloneType =
