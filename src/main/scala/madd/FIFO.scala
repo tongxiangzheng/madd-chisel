@@ -21,8 +21,8 @@ class FIFO(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
   val queueReg = RegInit(queueWire)
   */
   io.find:=io.enIn
-  io.addressOut=DontCare
-  io.strideOut=DontCare
+  io.addressOut:=DontCare
+  io.strideOut:=DontCare
   
 }
 
