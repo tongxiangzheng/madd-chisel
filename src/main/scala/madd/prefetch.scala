@@ -109,9 +109,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //实现替换策略
     //返回可信度，为0表示替换为newStride
     val same=(stride===newStride)
-    var ans=reliability+1.U
-    var solve=same;
-    ans=Mux(solve,ans,reliability>>1)
+    ans=Mux(same,reliability+1.U,reliability>>1)
     ans
   }
   
@@ -141,6 +139,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 
       reliability=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
       val replace=(reliability===0.U)
+      chisel3.printf(
+      p"replace: ${replace} reliability: ${reliability} stride: ${queueReg(p).stride} prereliability: ${queueReg(p).reliability}\n"
+    )
       stride=Mux(replace,newStride,queueReg(p).stride)
       prefetch_address:=io.address+stride
       ready:=true.B
