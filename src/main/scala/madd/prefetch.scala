@@ -93,10 +93,10 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   }
   def calcReliability(stride:UInt,reliability:UInt,newStride:UInt):UInt={
     //返回可信度，为0表示替换为newStride
-    val same=(stride===newstride)
+    val same=(stride===newStride)
     var ans=reliability+1.U
     var solve=same;
-    var ans=Mux(solve,ans,reliability>>1)
+    ans=Mux(solve,ans,reliability>>1)
     ans
   }
   
