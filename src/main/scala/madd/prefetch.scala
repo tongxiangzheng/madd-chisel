@@ -36,7 +36,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   chisel3.printf(
     p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
   )
-  fifoWrite(4,io.address,10.S)
+  fifoWrite(4.U,io.address,10.S)
 
 
   def fifoFind(pc: UInt):UInt = {
@@ -57,6 +57,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //是否有该项
     for(i <- 0 until size){
       val check=(queueReg(i).pc===pc)
+      chisel3.printf(
+        p"check1: p: ${p} queueReg(i).pc: ${queueReg(i).pc}\n"
+      )
       val select=Mux(found,false.B,check)
       found=Mux(select,true.B,found)
       p=Mux(check,i.U,p)
@@ -64,6 +67,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //是否有空位
     for(i <- 0 until size){
       val check=(queueReg(i).pc===0.U)
+      chisel3.printf(
+        p"check2: p: ${p} queueReg(i).pc: ${queueReg(i).pc}\n"
+      )
       val select=Mux(found,false.B,check)
       found=Mux(select,true.B,found)
       p=Mux(check,i.U,p)
@@ -72,7 +78,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     for(i <- 0 until size){
       val check=(dfn-queueReg(i).timestamp>dfn-queueReg(p).timestamp)
       chisel3.printf(
-        p"check: p: ${p} dfn: ${dfn} timestamp: ${queueReg(i).timestamp} cmp_timestamp:${queueReg(p).timestamp}\n"
+        p"check3: p: ${p} dfn: ${dfn} timestamp: ${queueReg(i).timestamp} cmp_timestamp:${queueReg(p).timestamp}\n"
       )
       val select=Mux(found,false.B,check)
       p=Mux(check,i.U,p)
