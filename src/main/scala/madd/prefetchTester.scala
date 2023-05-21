@@ -57,7 +57,7 @@ class PrefetchTester(dut: Prefetch)
 
 
       if(peek(dut.io.prefetch_valid)==1){
-        val pre_address=peek(dut.io.prefetch_address)
+        val pre_address=peek(dut.io.prefetch_address).toInt
         if((!pre_cache.contains(address)) && (!pre_cache.contains(address))){
           preOperator+=1
           pre_cache+=pre_address
