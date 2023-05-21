@@ -20,8 +20,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val lastPC = RegInit(0.U(pcWidth.W))
   val prefetch_valid = RegInit(false.B)
   val prefetch_address = RegInit(0.U(addressWidth.W))
-  //val stride = RegInit(0.U(addressWidth.W))
-  //val reliability = RegInit(0.U(32.W))
+  val stride = RegInit(0.U(addressWidth.W))
+  val reliability = RegInit(0.U(32.W))
   
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
@@ -110,8 +110,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
     prefetch_valid:=found
-    var stride=0.U(32.W)
-    var reliability=0.U(32.W)
+    //var stride=0.U(32.W)
+    //var reliability=0.U(32.W)
     when(found){
       var newStride=io.address-queueReg(p).address
 
