@@ -40,7 +40,7 @@ class PrefetchTester(dut: Prefetch)
     var preOperator=0
     var access=0
     poke(dut.io.pc,0)
-    poke(dut.io.enable, 1)
+    poke(dut.io.reset, 1)
     while(peek(dut.io.inited)==0){
       step(1)
     }
@@ -49,6 +49,7 @@ class PrefetchTester(dut: Prefetch)
     for (j<- 0 until numAccesses){
       poke(dut.io.pc, trace(i)(j)._1)
       poke(dut.io.address, trace(i)(j)._2)
+      poke(dut.io.enable,1)
       while(peek(dut.io.ready)==0){
         step(1)
       }
@@ -75,7 +76,8 @@ class PrefetchTester(dut: Prefetch)
       if((!pre_cache.contains(address)) && (!pre_cache.contains(address))){
         cache+=address
       }
-
+      
+      poke(dut.io.enable,0)
       poke(dut.io.pc, 0)
       while(peek(dut.io.ready)==1){
         step(1)
@@ -86,7 +88,7 @@ class PrefetchTester(dut: Prefetch)
     scala.Predef.printf(s"缓存命中率: ${Hits.toDouble/numAccesses} 预取行动率: ${preOperator.toDouble/numAccesses} 预取有效率 ${access.toDouble/preOperator} 预取产生的总收益率 ${access.toDouble/numAccesses}\n");
     scala.Predef.printf("-----------------\n");
 
-    poke(dut.io.enable, 0)
+    poke(dut.io.reset, 0)
     while(peek(dut.io.inited)==1){
       step(1)
     }
