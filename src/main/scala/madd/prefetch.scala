@@ -34,7 +34,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     io.prefetch_address:=queueReg(p).address
   }
   chisel3.printf(
-    p"[$currentCycle] p: ${p}\n"
+    p"main: p: ${p}\n"
   )
   fifoWrite(io.pc,io.address,10.S)
 
@@ -69,7 +69,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       p=Mux(check,i.U,p)
     }
     chisel3.printf(
-      p"[$currentCycle] write: p: ${p}\n"
+      p"write: p: ${p}\n"
     )
     queueReg(p).pc:=pc
     queueReg(p).address:=address
