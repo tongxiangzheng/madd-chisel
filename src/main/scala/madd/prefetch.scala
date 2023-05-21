@@ -94,6 +94,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     queueReg(p).timestamp:=dfn
   }
   def calcReliability(stride:UInt,reliability:UInt,newStride:UInt):UInt={
+    //实现替换策略
     //返回可信度，为0表示替换为newStride
     val same=(stride===newStride)
     var ans=reliability+1.U
