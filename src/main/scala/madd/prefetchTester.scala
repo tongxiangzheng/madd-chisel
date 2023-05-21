@@ -31,8 +31,8 @@ class PrefetchTester(dut: Prefetch)
   }
 
   for (i<- 0 until 4){
-    val cache = Set()
-    val pre_cache = Set()
+    val cache:Set[Int] = Set()
+    val pre_cache:Set[Int] = Set()
     var Hits=0
     var preOperator=0
     var access=0
