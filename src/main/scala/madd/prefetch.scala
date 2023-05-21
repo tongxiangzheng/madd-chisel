@@ -56,7 +56,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     }
     p
   }
-  def fifoWrite(pc:UInt,address:UInt,stride:SInt,enable:SInt):Unit = {
+  def fifoWrite(pc:UInt,address:UInt,stride:SInt,enable:Bool):Unit = {
     var p=0.U
     var found=Mux(enable,false.B,true.B)
     //是否有该项
