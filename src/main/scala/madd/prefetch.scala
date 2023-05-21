@@ -31,8 +31,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     var p=size.U
     //var found=false.B
     for(i<- 0 until size){
-      val check=(queueReg(i).pc===pc)
-      p=Mux(check,i.U,p)
+      p=Mux(queueReg(i).pc===pc,i.U,p)
     }
     p
   }
