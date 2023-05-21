@@ -14,7 +14,7 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
 class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   val size = 8
-  val dfn = Reg(UInt(32.W))
+  val dfn = RegInit().U(32.W))
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
@@ -72,7 +72,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     for(i <- 0 until size){
       val check=(dfn-queueReg(i).timestamp>dfn-queueReg(p).timestamp)
       chisel3.printf(
-        p"check: p: ${p} timestamp: ${queueReg(i).timestamp} cmp_timestamp:{queueReg(p).timestamp}\n"
+        p"check: p: ${p} dfn: ${dfn} timestamp: ${queueReg(i).timestamp} cmp_timestamp:${queueReg(p).timestamp}\n"
       )
       val select=Mux(found,false.B,check)
       p=Mux(check,i.U,p)
