@@ -34,15 +34,16 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     when(p===size.U){
      io.prefetch_valid:=false.B
      io.prefetch_address:=DontCare
-   }.otherwise{
-     io.prefetch_valid:=true.B
-     io.prefetch_address:=queueReg(p).address
-   }
+    }.otherwise{
+      io.prefetch_valid:=true.B
+      io.prefetch_address:=queueReg(p).address
+    }
+   
+    /*chisel3.printf(
+      p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
+    )*/
+    fifoWrite(io.pc,io.address,10.S,enable)
   }
-  /*chisel3.printf(
-    p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
-  )*/
-  fifoWrite(io.pc,io.address,10.S,enable)
 
 
   def fifoFind(pc: UInt):UInt = {
@@ -57,7 +58,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     }
     p
   }
-  def fifoWrite(pc:UInt,address:UInt,stride:SInt,enable:SInt):Unit = {
+  def fifoWrite(pc:UInt,address:UInt,stride:SInt,enable:Bool):Unit = {
     var p=0.U
     var found=Mux(enable,false.B,true.B)
     //是否有该项
