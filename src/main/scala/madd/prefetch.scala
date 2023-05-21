@@ -133,7 +133,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val reliability = RegInit(0.U(32.W))
   val prereliability = RegInit(0.U(32.W))
   val replace = RegInit(0.U(1.W))
-  withClockAndReset(io.pc) {
+
+  withClockAndReset(io.pc,io.pc) {
       scala.printf(p"reliability: ${reliability} stride: ${stride} prereliability: ${prereliability}\n");
       
   }
