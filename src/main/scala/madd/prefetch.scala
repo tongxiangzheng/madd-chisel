@@ -137,8 +137,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val reliability = RegInit(0.U(32.W))
   val prereliability = RegInit(0.U(32.W))
   val replace = RegInit(false.B)
-  chisel3.printf(p"0 pc: ${queueReg(0).pc} stride: ${queueReg(0).stride} reliability: ${queueReg(0).reliability} \n");
-  chisel3.printf(p"1 pc: ${queueReg(1).pc} stride: ${queueReg(1).stride} reliability: ${queueReg(1).reliability} \n");
+  chisel3.printf(p"0 pc: ${queueReg(0).pc} address: ${queueReg(0).address} stride: ${queueReg(0).stride} reliability: ${queueReg(0).reliability} \n");
+  chisel3.printf(p"0 unblock: ${unblock} \n");
   
   chisel3.printf(p"enable: ${enable} replace: ${replace} reliability: ${reliability} stride: ${stride} newStride: ${newStride} prereliability: ${prereliability}\n");
   when(enable){
