@@ -48,7 +48,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     }
     p
   }
-  def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability:UInt,haveStride:Bool):Unit = {
+  def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability_:UInt,haveStride:Bool):Unit = {
     var p=0.U
     var found=false.B
     //是否有该项
@@ -87,7 +87,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     queueReg(p).address:=address
     queueReg(p).stride:=stride
     queueReg(p).haveStride:=haveStride
-    queueReg(p).reliability:=reliability
+    queueReg(p).reliability:=reliability_
     dfn:=dfn+1.U
     queueReg(p).timestamp:=dfn
   }
