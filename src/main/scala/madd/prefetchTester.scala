@@ -36,6 +36,15 @@ class PrefetchTester(dut: Prefetch)
     var Hits=0
     var preOperator=0
     var access=0
+    poke(dut.io.reset, 1)
+    while(peek(dut.io.inited)==0){
+      step(1)
+    }
+    poke(dut.io.reset, 0)
+    while(peek(dut.io.inited)==1){
+      step(1)
+    }
+    
     for (j<- 0 until numAccesses){
       poke(dut.io.pc, trace(i)(j)._1)
       poke(dut.io.address, trace(i)(j)._2)
@@ -73,7 +82,9 @@ class PrefetchTester(dut: Prefetch)
       }
     }
     
-    scala.Predef.printf(s"[Tester] 测试集名称: ${tracename(i)} 缓存命中率: ${Hits.toDouble/numAccesses} 预取行动率: ${preOperator.toDouble/numAccesses} 预取有效率 ${access.toDouble/preOperator} 总收益率 ${access.toDouble/numAccesses}\n");
+    scala.Predef.printf(s"[Tester] 测试集名称: \"${tracename(i)}\"\n")
+    scala.Predef.printf(s"缓存命中率: ${Hits.toDouble/numAccesses} 预取行动率: ${preOperator.toDouble/numAccesses} 预取有效率 ${access.toDouble/preOperator} 预取产生的总收益率 ${access.toDouble/numAccesses}\n");
+    scala.Predef.printf("-----------------\n");
   }
 }
 

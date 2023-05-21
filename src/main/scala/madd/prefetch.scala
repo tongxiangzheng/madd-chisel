@@ -21,6 +21,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val prefetch_valid = RegInit(false.B)
   val prefetch_address = RegInit(0.U(addressWidth.W))
   val ready = RegInit(false.B)
+  val inited = RegInit(false.B)
   //val stride = RegInit(0.U(addressWidth.W))
   //val reliability = RegInit(0.U(32.W))
   
@@ -38,7 +39,17 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 
 
 
-
+  def init():Unit={
+    for (i <- 0 until size) {
+	    queueReg(i).pc:=0.U
+	    queueReg(i).address:=0.U
+	    queueReg(i).stride:=0.U
+      queueReg(i).reliability:=0.U
+      queueReg(i).timestamp:=0.U
+      queueReg(i).haveStride:=false.B
+    }
+    dfn:=0.U
+  }
   def fifoFind(pc: UInt):UInt = {
     var p=size.U
     //var found=false.B
@@ -106,7 +117,16 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
 
 //start
-
+  when(io.reset){
+    when(inited===false.B){
+      init()
+      inited:=true.B
+    }
+  }.otherwise{
+    inited:=false.B
+  }
+  io.inited:=inited
+  
   var change = io.pc =/= lastPC
   var enable = Mux(io.pc===0.U,false.B,change)
   lastPC:=io.pc
