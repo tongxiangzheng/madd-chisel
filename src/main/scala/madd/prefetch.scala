@@ -44,6 +44,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //var found=false.B
     for(i <- 0 until size){
       val check=(queueReg(i).pc===pc)
+      chisel3.printf(
+        p"find: ${i} queueReg(i).pc ${queueReg(i).pc} check: ${check}\n"
+      )
       p=Mux(check,i.U,p)
     }
     p
