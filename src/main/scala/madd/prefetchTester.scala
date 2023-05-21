@@ -10,7 +10,7 @@ class PrefetchTester(dut: Prefetch)
       
   val numAccesses = 32
   val testPointNum = 4
-  var trace = new Array[Array[(Int, Int)]](3)
+  var trace = new Array[Array[(Int, Int)]](testPointNum)
   val tracename = Array("pc小 address顺序", "pc大范围交错 address顺序", "address完全随机","pc随机")
   for (i <- 0 until testPointNum) {
     //(pc,address)
