@@ -122,12 +122,13 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     }.otherwise{
       prefetch_address:=0.U
       reliability:=0.U
+      stride:=0.U
     }
+    fifoWrite(io.pc,io.address,stride,reliability,found)
     /*chisel3.printf(
       p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
     )*/
   }
-    fifoWrite(io.pc,io.address,stride,reliability,found)
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
   
