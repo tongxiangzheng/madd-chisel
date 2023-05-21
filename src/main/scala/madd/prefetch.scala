@@ -115,9 +115,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     when(found){
       var newStride=io.address-queueReg(p).address
 
-      reliability=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
+      reliability:=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
       val replace=(reliability===0.U)
-      stride=Mux(replace,newStride,queueReg(p).stride)
+      stride:=Mux(replace,newStride,queueReg(p).stride)
       prefetch_address:=io.address+stride
     }.otherwise{
       prefetch_address:=0.U
