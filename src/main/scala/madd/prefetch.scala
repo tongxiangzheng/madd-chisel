@@ -16,7 +16,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val size = 8
   val dfn = RegInit(0.U(32.W))
   val lastPC = RegInit(0.U(pcWidth.W))
-
+  val prefetch_valid = RegInit(false.B)
+  val prefetch_address = RegInit(0.U(addressWidth.W))
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
@@ -32,11 +33,11 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   when(enable){
     var p=fifoFind(io.pc)
     when(p===size.U){
-     io.prefetch_valid:=false.B
-     io.prefetch_address:=DontCare
+     prefetch_valid:=false.B
+     prefetch_address:=DontCare
     }.otherwise{
-      io.prefetch_valid:=true.B
-      io.prefetch_address:=queueReg(p).address
+      prefetch_valid:=true.B
+      prefetch_address:=queueReg(p).address
     }
    
     /*chisel3.printf(
@@ -44,6 +45,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     )*/
     fifoWrite(io.pc,io.address,10.S,enable)
   }
+  io.prefetch_valid:=prefetch_valid
+  io.prefetch_address:=prefetch_address
+  
 
 
   def fifoFind(pc: UInt):UInt = {
