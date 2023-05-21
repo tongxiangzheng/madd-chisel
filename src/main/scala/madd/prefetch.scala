@@ -36,7 +36,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   chisel3.printf(
     p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
   )
-  fifoWrite(io.pc,io.address,10.S)
+  fifoWrite(4,io.address,10.S)
 
 
   def fifoFind(pc: UInt):UInt = {
@@ -81,7 +81,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       p"write: found: ${found} p: ${p}\n"
     )
     queueReg(p).pc:=pc
-    //queueReg(p).address:=address
+    queueReg(p).address:=address
     queueReg(p).stride:=stride
     dfn:=dfn+1.U
     queueReg(p).timestamp:=dfn
