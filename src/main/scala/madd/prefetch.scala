@@ -134,7 +134,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val prereliability = RegInit(0.U(32.W))
   val replace = RegInit(false.B)
 
-  chisel3.printf(p"reliability: ${reliability} stride: ${stride} prereliability: ${prereliability}\n");
+  chisel3.printf(p"replace: ${replace} reliability: ${reliability} stride: ${stride} prereliability: ${prereliability}\n");
   when(enable){
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
