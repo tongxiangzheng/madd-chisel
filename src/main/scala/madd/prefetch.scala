@@ -132,7 +132,11 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val stride = RegInit(0.U(addressWidth.W))
   val reliability = RegInit(0.U(32.W))
   val prereliability = RegInit(0.U(32.W))
-
+  val replace = RegInit(0.U(1.W))
+  withClockAndReset(io.pc) {
+      scala.printf(p"reliability: ${reliability} stride: ${stride} prereliability: ${prereliability}\n");
+      
+  }
   when(enable){
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
@@ -143,7 +147,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       var newStride=io.address-queueReg(p).address
       prereliability:=queueReg(p).reliability
       reliability:=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
-      var replace=(reliability===0.U)
+      replace:=(reliability===0.U)
       
       stride:=Mux(replace,newStride,queueReg(p).stride)
       prefetch_address:=io.address+stride
