@@ -27,7 +27,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
 	  queueWire(i).address:=0.U(addressWidth.W)
-	  queueWire(i).stride:=0.S(addressWidth.W+1)
+	  queueWire(i).stride:=0.U(addressWidth.W+1)
     queueWire(i).timestamp:=0.U(32.W)
     queueWire(i).haveStride:=false.B
   }
