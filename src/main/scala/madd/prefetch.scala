@@ -109,7 +109,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //实现替换策略
     //返回可信度，为0表示替换为newStride
     val same=(stride===newStride)
-    ans=Mux(same,reliability+1.U,reliability>>1)
+    val ans=Mux(same,reliability+1.U,reliability>>1)
     ans
   }
   
