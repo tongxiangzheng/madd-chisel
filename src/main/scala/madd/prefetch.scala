@@ -28,15 +28,13 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   io.prefetch_valid:=true.B
 
   def fifoFind(pc: UInt):UInt = {
+    var p=size
+    //var found=false.B
     for(i< 0 until size){
-      if(queueReg(i).pc===0){
-        continue;
-      }
-      if(queueReg(i).pc==pc){
-        i
-      }
+      val check=(queueReg(i).pc==pc)
+      p=Mux(check,i,p)
     }
-    size
+    p
   }
   def fifoWrite(pc:UInt,address:UInt,stride:UInt):Unit = {
     var p=0
@@ -59,7 +57,6 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       p=Mux(check,i,p)
     }
     queueReg(p).pc:=pc
-    
     queueReg(p).address:=address
     queueReg(p).stride:=stride
     dfn:=dfn+1
