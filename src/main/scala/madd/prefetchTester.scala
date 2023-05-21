@@ -31,12 +31,12 @@ class PrefetchTester(dut: Prefetch)
   }
 
   for (i<- 0 until 4){
+    val cache = new Set[int]()
+    val pre_cache = new Set[int]()
+    val Hits=0
+    val preOperator=0
+    val access=0
     for (j<- 0 until numAccesses){
-      val cache = new Set[int]()
-      val pre_cache = new Set[int]()
-      val Hits=0
-      val preOperator=0
-      val access=0
       poke(dut.io.pc, trace(i)(j)._1)
       poke(dut.io.address, trace(i)(j)._2)
       while(peek(dut.io.ready)==0){
