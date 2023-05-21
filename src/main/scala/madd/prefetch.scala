@@ -111,6 +111,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   when(enable){
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
+    prefetch_valid:=found
     var stride=0.U(32.W)
     var reliability=0.U(32.W)
     when(found){
@@ -130,7 +131,6 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
     )*/
   }
-  prefetch_valid:=found
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
   
