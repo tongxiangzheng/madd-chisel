@@ -14,7 +14,7 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
 class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   val size = 64
-  var dfn = 0.U(32.W)
+  val dfn = Reg(UInt(32.W))
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
