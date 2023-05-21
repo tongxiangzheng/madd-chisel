@@ -9,7 +9,7 @@ class PrefetchTester(dut: Prefetch)
       
   val numAccesses = 16
   val testPointNum = 3
-  var trace = new Array[ListBuffer[(Int, Int)]](3)
+  var trace = new Array[Array[(Int, Int)]](3)
   val tracename = Array("顺序", "完全随机", "概率顺序")
   for (i <- 0 until testPointNum) {
     //(pc,address)
