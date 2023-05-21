@@ -51,6 +51,7 @@ class PrefetchTester(dut: Prefetch)
     for (j<- 0 until numAccesses){
       poke(dut.io.pc, trace(i)(j)._1)
       poke(dut.io.address, trace(i)(j)._2)
+      step(1)
       while(peek(dut.io.ready)==0){
         step(1)
       }
