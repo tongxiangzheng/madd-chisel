@@ -121,6 +121,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       prefetch_address:=io.address+stride
     }.otherwise{
       prefetch_address:=0.U
+      reliability:=0.U
     }
     /*chisel3.printf(
       p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
