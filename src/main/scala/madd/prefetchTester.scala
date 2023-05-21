@@ -29,12 +29,16 @@ class PrefetchTester(dut: Prefetch)
       
       poke(dut.io.pc, trace(i)(j)._1)
       poke(dut.io.address, trace(i)(j)._2)
-      step(1)
+      while(peek(dut.io.ready)==0){
+        step(1)
+      }
       
       scala.Predef.printf(s"[Tester] pc: ${trace(i)(j)._1} address: ${trace(i)(j)._2} valid: ${peek(dut.io.prefetch_valid)} prefetch_address: ${peek(dut.io.prefetch_address)} \n");
       
       poke(dut.io.pc, 0)
-      step(1)
+      while(peek(dut.io.ready)==1){
+        step(1)
+      }
     }
     
     scala.Predef.printf(s"[Tester] testName: ${tracename(i)}\n");

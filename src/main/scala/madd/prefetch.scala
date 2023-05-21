@@ -20,6 +20,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val lastPC = RegInit(0.U(pcWidth.W))
   val prefetch_valid = RegInit(false.B)
   val prefetch_address = RegInit(0.U(addressWidth.W))
+  val ready = RegInit(false.B)
   //val stride = RegInit(0.U(addressWidth.W))
   //val reliability = RegInit(0.U(32.W))
   
@@ -106,8 +107,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 
 //start
 
-  var enable = io.pc =/= lastPC
-  enable = Mux(io.pc===0.U,false.B,enable)
+  var change = io.pc =/= lastPC
+  var enable = Mux(io.pc===0.U,false.B,change)
   lastPC:=io.pc
   when(enable){
     var p=fifoFind(io.pc)
@@ -122,6 +123,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       val replace=(reliability===0.U)
       stride=Mux(replace,newStride,queueReg(p).stride)
       prefetch_address:=io.address+stride
+      ready:=true.B
     }.otherwise{
       prefetch_address:=0.U
       reliability=0.U
@@ -132,6 +134,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
     )*/
   }
+  
+  ready:=(io.pc=\=0.U)
+  io.ready:=ready
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
   
