@@ -36,7 +36,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   chisel3.printf(
     p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
   )
-  fifoWrite(io.pc,io.address,10.S)
+  //fifoWrite(io.pc,io.address,10.S)
 
 
   def fifoFind(pc: UInt):UInt = {
