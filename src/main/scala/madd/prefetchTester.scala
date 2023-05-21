@@ -64,7 +64,7 @@ class PrefetchTester(dut: Prefetch)
         }
       }
       if((!pre_cache.contains(address)) && (!pre_cache.contains(address))){
-        cache+=pre_address
+        cache+=address
       }
 
       poke(dut.io.pc, 0)
