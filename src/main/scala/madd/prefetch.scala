@@ -132,7 +132,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val stride = RegInit(0.U(addressWidth.W))
   val reliability = RegInit(0.U(32.W))
   val prereliability = RegInit(0.U(32.W))
-  val replace = RegInit(0.U(1.W))
+  val replace = RegInit(false.B)
 
   chisel3.printf(p"reliability: ${reliability} stride: ${stride} prereliability: ${prereliability}\n");
   when(enable){
