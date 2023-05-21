@@ -29,40 +29,11 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 	  queueWire(i).address:=0.U(addressWidth.W)
 	  queueWire(i).stride:=0.S(addressWidth.W+1)
     queueWire(i).timestamp:=0.U(32.W)
-    queueWire(i).haveStride:=false
+    queueWire(i).haveStride:=false.B
   }
   val queueReg = RegInit(queueWire)
 
 
-//start
-
-  var enable = io.pc =/= lastPC
-  enable = Mux(io.pc===0.U,false.B,enable)
-  lastPC:=io.pc
-  when(enable){
-    var p=fifoFind(io.pc)
-    var found = (p=/=size.U)
-    prefetch_valid:=found
-    var stride=0.U
-    var reliability=0.U
-    when(found){
-      var newStride=io.address-queueReg(p).address
-
-      reliability=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
-      val replace=(reliability===0)
-      stride=Mux(replace,newStride,queueReg(p).stride)
-      prefetch_address:=io.address+stride
-    }.otherwise{
-      prefetch_address:=0.U
-    }
-    /*chisel3.printf(
-      p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
-    )*/
-    fifoWrite(io.pc,io.address,stride,reliability,found)
-  }
-  io.prefetch_valid:=prefetch_valid
-  io.prefetch_address:=prefetch_address
-  
 
 
   def fifoFind(pc: UInt):UInt = {
@@ -127,6 +98,37 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     var solve=same;
     ans=Mux(solve,ans,reliability>>1)
   }
+  
+  
+//start
+
+  var enable = io.pc =/= lastPC
+  enable = Mux(io.pc===0.U,false.B,enable)
+  lastPC:=io.pc
+  when(enable){
+    var p=fifoFind(io.pc)
+    var found = (p=/=size.U)
+    prefetch_valid:=found
+    var stride=0.U
+    var reliability=0.U
+    when(found){
+      var newStride=io.address-queueReg(p).address
+
+      reliability=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
+      val replace=(reliability===0.U)
+      stride=Mux(replace,newStride,queueReg(p).stride)
+      prefetch_address:=io.address+stride
+    }.otherwise{
+      prefetch_address:=0.U
+    }
+    /*chisel3.printf(
+      p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
+    )*/
+    fifoWrite(io.pc,io.address,stride,reliability,found)
+  }
+  io.prefetch_valid:=prefetch_valid
+  io.prefetch_address:=prefetch_address
+  
 }
 
 object Prefetch extends App {
