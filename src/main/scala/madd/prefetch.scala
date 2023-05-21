@@ -13,7 +13,7 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
 
 class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
-  val size = 64
+  val size = 8
   val dfn = Reg(UInt(32.W))
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
@@ -44,10 +44,10 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //var found=false.B
     for(i <- 0 until size){
       val check=(queueReg(i).pc===pc)
+      p=Mux(check,i.U,p)
       chisel3.printf(
         p"find: ${i} queueReg(i).pc ${queueReg(i).pc} check: ${check} p: ${p}\n"
       )
-      p=Mux(check,i.U,p)
     }
     p
   }
@@ -57,21 +57,24 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //是否有该项
     for(i <- 0 until size){
       val check=(queueReg(i).pc===pc)
-      var select=Mux(found,false.B,check)
+      val select=Mux(found,false.B,check)
       found=Mux(select,true.B,found)
       p=Mux(check,i.U,p)
     }
     //是否有空位
     for(i <- 0 until size){
       val check=(queueReg(i).pc===0.U)
-      var select=Mux(found,false.B,check)
+      val select=Mux(found,false.B,check)
       found=Mux(select,true.B,found)
       p=Mux(check,i.U,p)
     }
     //替换最老的
     for(i <- 0 until size){
       val check=(dfn-queueReg(i).timestamp>dfn-queueReg(p).timestamp)
-      var select=Mux(found,false.B,check)
+      chisel3.printf(
+        p"check: p: ${p} timestamp: ${queueReg(i).timestamp} cmp_timestamp:{queueReg(p).timestamp}\n"
+      )
+      val select=Mux(found,false.B,check)
       p=Mux(check,i.U,p)
     }
     chisel3.printf(
