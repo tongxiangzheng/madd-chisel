@@ -3,7 +3,6 @@ package madd
 import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
-import common.CurrentCycle
 
 class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val pc = UInt(pcWidth.W)
@@ -35,7 +34,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     io.prefetch_address:=queueReg(p).address
   }
   chisel3.printf(
-    p"[$currentCycle] main: p: ${p}\n"
+    p"[main: p: ${p}\n"
   )
   fifoWrite(io.pc,io.address,10.S)
 
