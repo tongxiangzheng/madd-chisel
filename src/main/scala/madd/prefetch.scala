@@ -31,7 +31,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     var p=size.U
     //var found=false.B
     for(i<- 0 until size){
-      p=Mux(queueReg(i).pc===pc,i.U,p)
+      val check=(queueReg(i).pc===pc)
+      p=Mux(check.B,i.U,p)
     }
     p
   }
@@ -40,19 +41,19 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     var found=false.B
     for(i<- 0 until size){
       val check=(queueReg(i).pc===pc)
-      check=Mux(found,0.U,check)
-      found=Mux(check,true.B,found)
+      check=Mux(found,false.B,check)
+      found=Mux(check.B,true.B,found)
       p=Mux(check,i.U,p)
     }
     for(i<- 0 until size){
       val check=(queueReg(i).pc===0.U)
-      check=Mux(found,0,check)
+      check=Mux(found,false.B,check)
       found=Mux(check,true.B,found)
       p=Mux(check,i.U,p)
     }
     for(i<- 0 until size){
       val check=(dfn-queueReg(i).timestamp>dfn-queueReg(p).timestamp)
-      check=Mux(found,0,check)
+      check=Mux(found,false.B,check)
       p=Mux(check,i.U,p)
     }
     queueReg(p).pc:=pc
