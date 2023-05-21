@@ -96,10 +96,11 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     val same=(stride===newstride)
     var ans=reliability+1.U
     var solve=same;
-    ans=Mux(solve,ans,reliability>>1)
+    var ans=Mux(solve,ans,reliability>>1)
+    ans
   }
   
-  
+
 //start
 
   var enable = io.pc =/= lastPC
