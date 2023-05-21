@@ -9,9 +9,9 @@ class PrefetchTester(dut: Prefetch)
     extends PeekPokeTester(dut) {
       
   val numAccesses = 32
-  val testPointNum = 4
+  val testPointNum = 5
   var trace = new Array[Array[(Int, Int)]](testPointNum)
-  val tracename = Array("pc小 address顺序", "pc大范围交错 address顺序", "address完全随机","pc随机")
+  val tracename = Array("pc小 address顺序", "pc大范围交错 address顺序", "address完全随机","pc随机","address 步长变化")
   for (i <- 0 until testPointNum) {
     //(pc,address)
     trace(i) = new Array[(Int, Int)](numAccesses)
@@ -28,6 +28,9 @@ class PrefetchTester(dut: Prefetch)
   }
   for (i <- 0 until numAccesses) {
     trace(3)(i) = ((scala.util.Random.nextInt(100), i * 8 % 1024))
+  }
+  for (i <- 0 until numAccesses) {
+    trace(3)(i) = ((1, i * (i/8+1) % 1024))
   }
 
   for (i<- 0 until 4){
