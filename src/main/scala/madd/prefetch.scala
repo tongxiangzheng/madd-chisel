@@ -126,19 +126,19 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   io.inited:=inited
 
   val change = io.pc =/= lastPC
-  var enable = Mux(io.pc===0.U,false.B,change)
-  enable = Mux(io.enable,enable,false.B)
+  val enable = Mux(io.pc=/=0.U && inited,change,false.B)
   
   lastPC:=io.pc
   
   val stride = RegInit(0.U(addressWidth.W))
+  val newStride = RegInit(0.U(addressWidth.W))
   val reliability = RegInit(0.U(32.W))
   val prereliability = RegInit(0.U(32.W))
   val replace = RegInit(false.B)
   chisel3.printf(p"0 pc: ${queueReg(0).pc} stride: ${queueReg(0).stride} reliability: ${queueReg(0).reliability} \n");
   chisel3.printf(p"1 pc: ${queueReg(1).pc} stride: ${queueReg(1).stride} reliability: ${queueReg(1).reliability} \n");
   
-  chisel3.printf(p"replace: ${replace} reliability: ${reliability} stride: ${stride} prereliability: ${prereliability}\n");
+  chisel3.printf(p"replace: ${replace} reliability: ${reliability} stride: ${stride} newStride: ${newStride} prereliability: ${prereliability}\n");
   when(enable){
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
@@ -146,7 +146,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     //var stride=0.U(32.W)
     //var reliability=0.U(32.W)
     when(found){
-      var newStride=io.address-queueReg(p).address
+      newStride:=io.address-queueReg(p).address
       prereliability:=queueReg(p).reliability
       reliability:=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
       replace:=(reliability===0.U)
