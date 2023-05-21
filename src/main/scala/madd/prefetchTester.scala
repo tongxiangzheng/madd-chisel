@@ -54,7 +54,9 @@ class PrefetchTester(dut: Prefetch)
       while(peek(dut.io.ready)==0){
         step(1)
       }
-      
+      chisel3.printf(
+        p"replace: ${peek(dut.replace)} reliability: ${peek(dut.reliability)} stride: ${peek(dut.stride)} prereliability: ${peek(dut.reliability)}\n"
+      )
       scala.Predef.printf(s"[Tester] pc: ${trace(i)(j)._1} address: ${trace(i)(j)._2} valid: ${peek(dut.io.prefetch_valid)} prefetch_address: ${peek(dut.io.prefetch_address)} \n");
       
       val address=trace(i)(j)._2
