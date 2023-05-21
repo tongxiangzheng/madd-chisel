@@ -115,7 +115,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
 
 //start
-  when(io.reset===true.B){
+  when(io.enable===true.B){
     when(inited===false.B){
       init()
       inited:=true.B
@@ -125,8 +125,10 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   }
   io.inited:=inited
 
-  var change = io.pc =/= lastPC
+  val change = io.pc =/= lastPC
   var enable = Mux(io.pc===0.U,false.B,change)
+  enable = Mux(io.enable,enable,false.B)
+  
   lastPC:=io.pc
   
   val stride = RegInit(0.U(addressWidth.W))
