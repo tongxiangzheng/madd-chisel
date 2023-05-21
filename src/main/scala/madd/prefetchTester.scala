@@ -70,7 +70,7 @@ class PrefetchTester(dut: Prefetch)
       }
     }
     
-    scala.Predef.printf(s"[Tester] 测试集名称: ${tracename(i)} 缓存命中率: ${Hits.toDouble/numAccesses} 预取行动率: ${preOperator.toDouble/numAccesses} 预取有效率 ${access.toDouble/Hits.preOperator} 总收益率 ${access.toDouble/numAccesses}\n");
+    scala.Predef.printf(s"[Tester] 测试集名称: ${tracename(i)} 缓存命中率: ${Hits.toDouble/numAccesses} 预取行动率: ${preOperator.toDouble/numAccesses} 预取有效率 ${access.toDouble/preOperator} 总收益率 ${access.toDouble/numAccesses}\n");
   }
 }
 
