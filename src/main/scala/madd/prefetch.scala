@@ -23,10 +23,14 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     queueWire(i).timestamp:=0.U(32.W)
   }
   val queueReg = RegInit(queueWire)
+
+
   val p=fifoFind(io.pc)
   io.prefetch_address:=queueReg(p).address
   io.prefetch_valid:=Mux(p===size.U,false.B,true.B)
   fifoWrite(io.pc,io.address,10.U)
+
+
   def fifoFind(pc: UInt):UInt = {
     var p=size.U
     //var found=false.B
