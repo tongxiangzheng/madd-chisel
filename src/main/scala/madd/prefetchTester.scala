@@ -17,10 +17,10 @@ class PrefetchTester(dut: Prefetch)
     
   }
   for (i <- 0 until numAccesses) {
-    trace(0)(i) += ((i*4/numAccesses+1, i * 16 % 256))
+    trace(0)(i) = ((i*4/numAccesses+1, i * 16 % 256))
   }
   for (i <- 0 until numAccesses) {
-    trace(1)(i) += ((i*4/numAccesses+1, scala.util.Random.nextInt(100)))
+    trace(1)(i) = ((i*4/numAccesses+1, scala.util.Random.nextInt(100)))
   }
     
 
