@@ -7,7 +7,7 @@ import chisel3.util._
 class PrefetchTester(dut: Prefetch)
     extends PeekPokeTester(dut) {
       
-  val numAccesses = 1024
+  val numAccesses = 16
   val testPointNum = 3
   var trace = new Array[ListBuffer[(Int, Int)]](3)
   val tracename = Array("顺序", "完全随机", "概率顺序")
@@ -17,10 +17,10 @@ class PrefetchTester(dut: Prefetch)
     
   }
   for (i <- 0 until numAccesses) {
-    trace[0] += ((i*2/numAccesses+1, i * 16 % 256))
+    trace[0] += ((i*4/numAccesses+1, i * 16 % 256))
   }
   for (i <- 0 until numAccesses) {
-    trace[1] += ((i*2/numAccesses+1, scala.util.Random.nextInt(100)))
+    trace[1] += ((i*4/numAccesses+1, scala.util.Random.nextInt(100)))
   }
     
 
@@ -32,7 +32,7 @@ class PrefetchTester(dut: Prefetch)
       step(1)
       //expect(dut.io.prefetch_valid, false.B)
       
-      scala.Predef.printf(s"[Tester] pc: ${trace[i](j)._1} address: ${trace[i](j)._2} valid: ${peek(dut.io.prefetch_valid)} \n");
+      scala.Predef.printf(s"[Tester] pc: ${trace[i](j)._1} address: ${trace[i](j)._2} valid: ${peek(dut.io.prefetch_valid)} prefetch_address: ${peek(dut.io.prefetch_address)} \n");
       poke(dut.io.pc, 0)
     }
     
