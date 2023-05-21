@@ -48,7 +48,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     }
     p
   }
-  def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability_:UInt,haveStride:Bool):Unit = {
+  def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability:UInt,haveStride:Bool):Unit = {
     var p=0.U
     var found=false.B
     //是否有该项
@@ -87,7 +87,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     queueReg(p).address:=address
     queueReg(p).stride:=stride
     queueReg(p).haveStride:=haveStride
-    queueReg(p).reliability:=reliability_
+    queueReg(p).reliability:=reliability
     dfn:=dfn+1.U
     queueReg(p).timestamp:=dfn
   }
@@ -126,8 +126,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     /*chisel3.printf(
       p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
     )*/
-    fifoWrite(io.pc,io.address,stride,reliability,found)
   }
+    fifoWrite(io.pc,io.address,stride,reliability,found)
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
   
