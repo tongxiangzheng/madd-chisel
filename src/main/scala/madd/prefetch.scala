@@ -20,16 +20,18 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val lastPC = RegInit(0.U(pcWidth.W))
   val prefetch_valid = RegInit(false.B)
   val prefetch_address = RegInit(0.U(addressWidth.W))
-  val stride = RegInit(0.U(addressWidth.W))
-  val reliability = RegInit(0.U(32.W))
+  //val stride = RegInit(0.U(addressWidth.W))
+  //val reliability = RegInit(0.U(32.W))
   
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
 	  queueWire(i).address:=0.U(addressWidth.W)
 	  queueWire(i).stride:=0.U(addressWidth.W)
+    queueWire(i).reliability:=0.U(addressWidth.W)
     queueWire(i).timestamp:=0.U(32.W)
     queueWire(i).haveStride:=false.B
+    
   }
   val queueReg = RegInit(queueWire)
 
@@ -109,26 +111,26 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   when(enable){
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
-    prefetch_valid:=found
-    //var stride=0.U(32.W)
-    //var reliability=0.U(32.W)
+    var stride=0.U(32.W)
+    var reliability=0.U(32.W)
     when(found){
       var newStride=io.address-queueReg(p).address
 
-      reliability:=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
+      reliability=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
       val replace=(reliability===0.U)
-      stride:=Mux(replace,newStride,queueReg(p).stride)
+      stride=Mux(replace,newStride,queueReg(p).stride)
       prefetch_address:=io.address+stride
     }.otherwise{
       prefetch_address:=0.U
-      reliability:=0.U
-      stride:=0.U
+      //reliability:=0.U
+      //stride:=0.U
     }
     fifoWrite(io.pc,io.address,stride,reliability,found)
     /*chisel3.printf(
       p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
     )*/
   }
+  prefetch_valid:=found
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
   
