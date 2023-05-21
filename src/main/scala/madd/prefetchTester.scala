@@ -30,7 +30,7 @@ class PrefetchTester(dut: Prefetch)
     trace(3)(i) = ((scala.util.Random.nextInt(100), i * 8 % 1024))
   }
   for (i <- 0 until numAccesses) {
-    trace(3)(i) = ((1, i * (i/8+1) % 1024))
+    trace(4)(i) = ((1, i * (i/8+1) % 1024))
   }
 
   for (i<- 0 until testPointNum){
