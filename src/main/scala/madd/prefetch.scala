@@ -134,8 +134,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       p"main: p: ${p} pc: ${io.pc} prefetch_valid: ${io.prefetch_valid} prefetch_address: ${io.prefetch_address}\n"
     )*/
   }
-  
-  ready:=(io.pc=\=0.U)
+
+  ready:=(io.pc=/=0.U)
   io.ready:=ready
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
