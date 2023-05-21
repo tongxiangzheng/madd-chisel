@@ -81,7 +81,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       p"write: found: ${found} p: ${p}\n"
     )
     queueReg(p).pc:=pc
-    queueReg(p).address:=address
+    //queueReg(p).address:=address
     queueReg(p).stride:=stride
     dfn:=dfn+1.U
     queueReg(p).timestamp:=dfn
