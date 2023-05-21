@@ -30,28 +30,28 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   def fifoFind(pc: UInt):UInt = {
     var p=size.U
     //var found=false.B
-    for(i<- 0 until size){
+    for(i <- 0 until size){
       val check=(queueReg(i).pc===pc)
-      p=Mux(check,0.U,p)
+      p=Mux(check,i.U,p)
     }
     p
   }
   def fifoWrite(pc:UInt,address:UInt,stride:UInt):Unit = {
     var p=0.U
     var found=false.B
-    for(i<- 0 until size){
+    for(i <- 0 until size){
       val check=(queueReg(i).pc===pc)
       check=Mux(found,false.B,check)
-      found=Mux(check.B,true.B,found)
+      found=Mux(check,true.B,found)
       p=Mux(check,i.U,p)
     }
-    for(i<- 0 until size){
+    for(i <- 0 until size){
       val check=(queueReg(i).pc===0.U)
       check=Mux(found,false.B,check)
       found=Mux(check,true.B,found)
       p=Mux(check,i.U,p)
     }
-    for(i<- 0 until size){
+    for(i <- 0 until size){
       val check=(dfn-queueReg(i).timestamp>dfn-queueReg(p).timestamp)
       check=Mux(found,false.B,check)
       p=Mux(check,i.U,p)
