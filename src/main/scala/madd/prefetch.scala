@@ -16,7 +16,6 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val size = 8
   val dfn = RegInit(0.U(32.W))
   val lastPC = RegInit(0.U(pcWidth.W))
-  val enable = RegInit(false.B)
 
   val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {

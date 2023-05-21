@@ -11,6 +11,7 @@ class PrefetchTester(dut: Prefetch)
   poke(dut.io.address, 123.U)
   step(1)
   expect(dut.io.prefetch_valid, false.B)
+  poke(dut.io.pc, 0)
 
   step(1)
 
@@ -19,6 +20,7 @@ class PrefetchTester(dut: Prefetch)
   step(1)
   expect(dut.io.prefetch_valid, true.B)
   expect(dut.io.prefetch_address, 123.U)
+  poke(dut.io.pc, 0)
   
 }
 
