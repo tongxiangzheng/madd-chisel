@@ -110,8 +110,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
     prefetch_valid:=found
-    var stride=0.U
-    var reliability=0.U
+    var stride=0.U(32.W)
+    var reliability=0.U(32.W)
     when(found){
       var newStride=io.address-queueReg(p).address
 
