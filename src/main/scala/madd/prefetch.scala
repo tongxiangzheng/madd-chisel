@@ -59,7 +59,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     queueReg(p).pc:=pc
     queueReg(p).address:=address
     queueReg(p).stride:=stride
-    dfn:=dfn+1
+    dfn:=dfn+1.U
     queueReg(p).timestamp:=dfn
   }
 }
