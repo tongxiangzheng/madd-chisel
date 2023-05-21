@@ -8,7 +8,7 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val pc = UInt(pcWidth.W)
   val address = UInt(addressWidth.W)
 	val stride = SInt(addressWidth.W+1) //SInt 记得大小加一
-  val timestamp = Uint(32.W)
+  val timestamp = UInt(32.W)
 }
 
 class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
@@ -28,33 +28,33 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   io.prefetch_valid:=true.B
 
   def fifoFind(pc: UInt):UInt = {
-    var p=size
+    var p=size.U
     //var found=false.B
     for(i<- 0 until size){
       val check=(queueReg(i).pc==pc)
-      p=Mux(check,i,p)
+      p=Mux(check,i.U,p)
     }
     p
   }
   def fifoWrite(pc:UInt,address:UInt,stride:UInt):Unit = {
-    var p=0
+    var p=0.U
     var found=false.B
     for(i<- 0 until size){
       val check=(queueReg(i).pc==pc)
       check=Mux(found,0,check)
       found=Mux(check,true.B,found)
-      p=Mux(check,i,p)
+      p=Mux(check,i.U,p)
     }
     for(i<- 0 until size){
       val check=(queueReg(i).pc==0)
       check=Mux(found,0,check)
       found=Mux(check,true.B,found)
-      p=Mux(check,i,p)
+      p=Mux(check,i.U,p)
     }
     for(i<- 0 until size){
       val check=(dfn-queueReg(i).timestamp>dfn-queueReg(p).timestamp)
       check=Mux(found,0,check)
-      p=Mux(check,i,p)
+      p=Mux(check,i.U,p)
     }
     queueReg(p).pc:=pc
     queueReg(p).address:=address
