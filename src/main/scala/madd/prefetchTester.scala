@@ -50,6 +50,7 @@ class PrefetchTester(dut: Prefetch)
       poke(dut.io.pc, trace(i)(j)._1)
       poke(dut.io.address, trace(i)(j)._2)
       poke(dut.io.enable,1)
+        step(1)
       /*while(peek(dut.io.ready)==0){
         step(1)
       }*/
@@ -79,6 +80,7 @@ class PrefetchTester(dut: Prefetch)
       
       poke(dut.io.enable,0)
       poke(dut.io.pc, 0)
+        step(1)
       /*while(peek(dut.io.ready)==1){
         step(1)
       }*/
