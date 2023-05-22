@@ -9,7 +9,7 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val address = UInt(addressWidth.W)
   val timestamp = UInt(32.W)
 	val stride = UInt(addressWidth.W)
-  val haveStride = Bool()
+  //val haveStride = Bool()
   val reliability = UInt(32.W)
 }
 
@@ -48,7 +48,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 	    queueReg(i).stride:=0.U
       queueReg(i).reliability:=0.U
       queueReg(i).timestamp:=0.U
-      queueReg(i).haveStride:=false.B
+      //queueReg(i).haveStride:=false.B
     }
     dfn:=0.U
   }
@@ -64,7 +64,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     }
     p
   }
-  def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability:UInt,haveStride:Bool):Unit = {
+  def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability:UInt):Unit = {
     var p=0.U
     var found=false.B
     //是否有该项
@@ -102,7 +102,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     queueReg(p).pc:=pc
     queueReg(p).address:=address
     queueReg(p).stride:=stride
-    queueReg(p).haveStride:=haveStride
+    //queueReg(p).haveStride:=haveStride
     queueReg(p).reliability:=reliability
     dfn:=dfn+1.U
     queueReg(p).timestamp:=dfn
@@ -154,6 +154,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       replace:=(reliability===0.U)
       
       stride:=Mux(replace,newStride,queueReg(p).stride)
+      reliability:=Mux(replace,1,reliability)
       prefetch_address:=io.address+stride
       ready:=true.B
     }.otherwise{
@@ -161,7 +162,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       reliability:=0.U
       stride:=0.U
     }
-    fifoWrite(io.pc,io.address,stride,reliability,found)
+    fifoWrite(io.pc,io.address,stride,reliability)
     /*chisel3.printf(
       p"write: p: ${p} pc: ${io.pc} reliability: ${reliability}\n"
     )*/
