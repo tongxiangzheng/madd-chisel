@@ -153,7 +153,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       val replace=(reliability===0.U)
       
       val stride=Mux(replace,newStride,queueReg(p).stride)
-      val w_reliability=Mux(replace,5.U,reliability)
+      val w_reliability=Mux(replace,1.U,reliability)
       prefetch_address:=io.address+stride
       fifoWrite(io.pc,io.address,stride,w_reliability)
     }.otherwise{
@@ -166,7 +166,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   }
 
   ready:=io.enable
-  io.ready:=ready
+  io.ready:=RegNext(ready)
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
   
