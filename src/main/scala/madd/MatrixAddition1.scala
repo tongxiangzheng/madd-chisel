@@ -8,8 +8,8 @@ class MatrixAddition1(M: Int, N: Int) extends Module {
   val io = IO(new MatrixAddition1IO(M, N))
 
   io.out := DontCare
-  val sum = RegInit(0.U(32.W))
-  sum:=0
+  val sum = RegInit(0.S(32.W))
+  sum:=0.S
   for (i <- 0 until M) {
     for (j <- 0 until N) {
 
