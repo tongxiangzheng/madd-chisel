@@ -160,8 +160,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       
     }.otherwise{
       prefetch_address:=0.U
-      //reliability:=0.U
-      //stride:=0.U
+      reliability=0.U
+      stride=0.U
     }
     fifoWrite(io.pc,io.address,stride,reliability)
     /*chisel3.printf(
