@@ -19,7 +19,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val dfn = RegInit(0.U(32.W))
   val lastPC_ = RegInit(0.U(pcWidth.W))
   val prefetch_valid = RegInit(false.B)
-  val prefetch_address_ = RegInit(0.U(addressWidth.W))
+  val prefetch_address = RegInit(0.U(addressWidth.W))
   val ready = RegInit(false.B)
   val inited = RegInit(false.B)
   //val unblock = RegInit(false.B)
