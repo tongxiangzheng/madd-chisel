@@ -145,13 +145,11 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
     prefetch_valid:=found
-    //var stride=0.U(32.W)
-    //var reliability=0.U(32.W)
-    var stride=0.U
-    var reliability=0.U
+    var stride=0.U(32.W)
+    var reliability=0.U(32.W)
 
     when(found){
-      val newStride:=io.address-queueReg(p).address
+      val newStride=io.address-queueReg(p).address
       //prereliability:=queueReg(p).reliability
       reliability=calcReliability(queueReg(p).stride,queueReg(p).reliability,newStride)
       val replace=(reliability===0.U)
