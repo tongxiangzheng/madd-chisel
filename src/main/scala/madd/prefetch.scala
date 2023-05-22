@@ -141,7 +141,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
   chisel3.printf(p"enable: ${enable} replace: ${replace} reliability: ${reliability} stride: ${stride} newStride: ${newStride} prereliability: ${prereliability}\n");
   when(enable){
-    enable:=false.B
+    enable=false.B
     var p=fifoFind(io.pc)
     var found = (p=/=size.U)
     prefetch_valid:=found
