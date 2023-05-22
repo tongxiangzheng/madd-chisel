@@ -126,10 +126,10 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     inited:=false.B
   }
   io.inited:=inited
-
-  val enable = Mux(io.enable,unblock,false.B)
+  unblock:=io.enable
+  val enable =  unblock & !RegNext(unblock)
   unblock:=Mux(io.enable,false.B,true.B)
-  lastPC:=io.pc
+  //lastPC:=io.pc
   
   val stride = RegInit(0.U(addressWidth.W))
   val newStride = RegInit(0.U(addressWidth.W))
