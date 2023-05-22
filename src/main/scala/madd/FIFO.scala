@@ -6,15 +6,17 @@ import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
 class FIFO(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new FIFOIO(pcWidth,addressWidth))
-  val reliability = RegInit(0.U(32.W))
-  //val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
+  /*val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	queueWire(i).pc:=0.U(pcWidth.W)
 	queueWire(i).address:=0.U(addressWidth.W)
 	queueWire(i).stride:=0.S(addressWidth.W+1)
   }
   val queueReg = RegInit(queueWire)
-  
+  */
+  io.find:=io.enIn
+  io.addressOut:=DontCare
+  io.strideOut:=DontCare
   
 }
 
