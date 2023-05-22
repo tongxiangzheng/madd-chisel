@@ -117,8 +117,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
 
 //start
-  when(io.reset===true.B){
-    when(inited===false.B){
+  when(io.reset){
+    when(!RegNext(io.reset)){
       init()
       inited:=true.B
     }
