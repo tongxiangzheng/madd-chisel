@@ -23,7 +23,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val ready = RegInit(false.B)
   val inited = RegInit(false.B)
   val unblock = RegInit(false.B)
-  
+  val enable = RegInit(false.B)
   //val stride = RegInit(0.U(addressWidth.W))
   //val reliability = RegInit(0.U(32.W))
   
@@ -127,8 +127,8 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   }
   io.inited:=inited
   unblock:=io.enable
-  val enable =  unblock & !RegNext(unblock)
-  unblock:=Mux(io.enable,false.B,true.B)
+  enable := unblock & !RegNext(unblock)
+  //unblock:=Mux(io.enable,false.B,true.B)
   //lastPC:=io.pc
   
   val stride = RegInit(0.U(addressWidth.W))
