@@ -127,7 +127,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   }
   io.inited:=inited
   //unblock:=
-  val enable = io.enable & !RegNext(io.enable)
+  var enable = io.enable & !RegNext(io.enable)
   //unblock:=Mux(io.enable,false.B,true.B)
   //lastPC:=io.pc
   
