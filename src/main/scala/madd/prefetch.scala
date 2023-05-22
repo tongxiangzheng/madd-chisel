@@ -160,7 +160,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       
     }.otherwise{
       prefetch_address:=0.U
-      reliability=321.U
+      reliability=1000.U-dfn
       stride=0.U
     }
     fifoWrite(io.pc,io.address,stride,reliability)
