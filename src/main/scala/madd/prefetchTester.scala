@@ -33,7 +33,7 @@ class PrefetchTester(dut: Prefetch)
     trace(4)(i) = ((1, i * (i/8+1) % 1024))
   }
 
-  for (i<- testPointNum-1 until testPointNum){
+  for (i<- 0 until testPointNum){
     val cache:Set[Int] = Set()
     val pre_cache:Set[Int] = Set()
     var Hits=0
