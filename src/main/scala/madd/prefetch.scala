@@ -154,7 +154,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       replace:=(reliability===0.U)
       
       stride:=Mux(replace,newStride,queueReg(p).stride)
-      reliability:=Mux(replace,1,reliability)
+      reliability:=Mux(replace,1.U,reliability)
       prefetch_address:=io.address+stride
       ready:=true.B
     }.otherwise{
