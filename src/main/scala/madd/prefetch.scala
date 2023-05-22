@@ -161,6 +161,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       stride:=0.U
     }
     fifoWrite(io.pc,io.address,stride,reliability,found)
+    enable:=false.B
     /*chisel3.printf(
       p"write: p: ${p} pc: ${io.pc} reliability: ${reliability}\n"
     )*/
