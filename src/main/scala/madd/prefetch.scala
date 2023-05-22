@@ -34,7 +34,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 	  queueWire(i).stride:=0.U(addressWidth.W)
     queueWire(i).reliability:=0.U(addressWidth.W)
     queueWire(i).timestamp:=0.U(32.W)
-    queueWire(i).haveStride:=false.B
+    //queueWire(i).haveStride:=false.B
     
   }
   val queueReg = RegInit(queueWire)
