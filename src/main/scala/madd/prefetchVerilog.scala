@@ -10,5 +10,5 @@ import chisel3.stage.ChiselStage
 */
 
 object PrefetchVerilog extends App {
-  (new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32))
+  
 }

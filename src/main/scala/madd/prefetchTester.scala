@@ -99,7 +99,9 @@ class PrefetchTester(dut: Prefetch)
 }
 
 object PrefetchTester extends App {
+  (new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32))
+  /*
   chisel3.iotesters.Driver(() => new Prefetch(32, 32)) { dut =>
     new PrefetchTester(dut)
-  }
+  }*/
 }

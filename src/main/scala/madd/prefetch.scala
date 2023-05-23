@@ -173,12 +173,3 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   io.prefetch_address:=prefetch_address
   
 }
-
-object Prefetch extends App {
-  (new ChiselStage).execute(
-    Array("-X", "verilog", "-td", "source/"),
-    Seq(
-      ChiselGeneratorAnnotation(() => new Prefetch(32, 32))
-    )
-  )
-}
