@@ -182,3 +182,5 @@ object Prefetch extends App {
     )
   )
 }
+
+(new ChiselStage).emitVerilog(new Prefetch(32, 32))
