@@ -9,7 +9,9 @@ lazy val root = (project in file("."))
     name := "madd-chisel-template",
     libraryDependencies ++= Seq(
       "edu.berkeley.cs" %% "chisel3" % "3.4.1",
-      "edu.berkeley.cs" %% "chisel-iotesters" % "1.5.2"
+      "edu.berkeley.cs" %% "chisel-iotesters" % "1.5.2",
+      "edu.berkeley.cs" %% "circt"
+      
     ),
     scalacOptions ++= Seq(
       "-Xsource:2.11",
