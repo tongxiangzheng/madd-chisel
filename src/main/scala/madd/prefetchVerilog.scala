@@ -1,5 +1,5 @@
 import chisel3.stage.ChiselGeneratorAnnotation
-import circt.stage.{ChiselStage, FirtoolOption}
+import chisel3.stage.ChiselStage
 
 /*
 */
