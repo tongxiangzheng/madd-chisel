@@ -5,6 +5,9 @@ import chisel3.iotesters.PeekPokeTester
 import chisel3.util._
 import scala.collection.mutable.Set
 
+import chisel3.stage.ChiselGeneratorAnnotation
+import chisel3.stage.ChiselStage
+
 class PrefetchTester(dut: Prefetch)
     extends PeekPokeTester(dut) {
       
@@ -96,7 +99,8 @@ class PrefetchTester(dut: Prefetch)
 }
 
 object PrefetchTester extends App {
-  chisel3.iotesters.Driver(() => new Prefetch(32, 32)) { dut =>
+  scala.Predef.println((new ChiselStage).emitVerilog(new Prefetch(32, 32)))
+  /*chisel3.iotesters.Driver(() => new Prefetch(32, 32)) { dut =>
     new PrefetchTester(dut)
-  }
+  }*/
 }

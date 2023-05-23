@@ -9,5 +9,5 @@ import chisel3.stage.ChiselStage
 /*
 */
 object PrefetchVerilog extends App {
-  scala.Predef.println((new ChiselStage).emitVerilog(new Prefetch(32, 32)))
+  
 }
