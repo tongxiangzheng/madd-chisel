@@ -1,3 +1,5 @@
+package madd
+
 import chisel3.stage.ChiselGeneratorAnnotation
 import chisel3.stage.ChiselStage
 
