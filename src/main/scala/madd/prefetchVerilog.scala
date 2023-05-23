@@ -9,6 +9,6 @@ object PrefetchVerilog extends App {
   Seq(ChiselGeneratorAnnotation(() => new Prefetch(32, 32)),
     FirtoolOption("--disable-all-randomization")))*/
 
-  val verilogString = chisel3.getVerilogString(new FirFilter(8, Seq(0.U, 1.U)))
+  val verilogString = chisel3.getVerilogString(new Prefetch(32, 32))
   println(verilogString)
 }
