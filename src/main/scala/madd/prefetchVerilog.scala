@@ -8,7 +8,7 @@ import chisel3.stage.ChiselStage
 
 /*
 */
-object PrefetchVerilog extends App {
+object PrefetchVerilog extends Module {
   /*(new ChiselStage).execute(
   Array("--target", "systemverilog"),
   Seq(ChiselGeneratorAnnotation(() => new Prefetch(32, 32)),
@@ -17,5 +17,5 @@ object PrefetchVerilog extends App {
   /*val verilogString = chisel3.getVerilogString(new Prefetch(32, 32))
   println(verilogString)*/
 
-  println(getVerilog(new Prefetch(32, 32)))
 }
+(new ChiselStage).emitVerilog(new Prefetch(32, 32))
