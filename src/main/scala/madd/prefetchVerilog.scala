@@ -16,6 +16,6 @@ object PrefetchVerilog extends Module {
 
   /*val verilogString = chisel3.getVerilogString(new Prefetch(32, 32))
   println(verilogString)*/
+  (new ChiselStage).emitVerilog(new Prefetch(32, 32))
 
 }
-(new ChiselStage).emitVerilog(new Prefetch(32, 32))
