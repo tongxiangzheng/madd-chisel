@@ -4,7 +4,7 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
-class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
+class ItemData(val pcWidth: Int,val addressWidth: Int,select:UInt) extends Bundle {
   val pc = UInt(pcWidth.W)
   val address = UInt(addressWidth.W)
   val timestamp = UInt(32.W)
@@ -12,7 +12,23 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   //val haveStride = Bool()
   val reliability = UInt(32.W)
 }
+/*class GenTree(val prefetch:Prefetch,val pWidth:UInt,val p:Int,val size:Int,selector:UInt=>UInt=>UInt,checker:UInt=>Bool) extends Module{
+  val io = IO(new Bundle{
+    val p = Output(UInt(pWidth.W))
+    val found = Output(Bool)
+  })
+  if(size===1){
+    val check=checker(p)
+    io.found:=check
+    io.p:=p;
+  }else{
+    int halfSize=size/2
+    val l=new GenTree(prefetch,pWidth,p,halfSize,selector,checker)
+    val r=new GenTree(prefetch,pWidth,p+halfSize,halfSize,selector,checker)
+    val check=l.found|r.found
 
+  }
+}*/
 class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   val size = 8
@@ -77,6 +93,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
       found=Mux(select,true.B,found)
       p=Mux(select,i.U,p)
     }
+
     //是否有空位
     for(i <- 0 until size){
       val check=(queueReg(i).pc===0.U)
@@ -172,4 +189,9 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   io.prefetch_valid:=prefetch_valid
   io.prefetch_address:=prefetch_address
   
+}
+
+object Prefetch extends App {
+  
+  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
 }
