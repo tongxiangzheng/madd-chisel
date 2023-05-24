@@ -29,7 +29,7 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
 
   }
 }*/
-class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
+class Prefetch2(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   val size = 8
   val dfn = RegInit(0.U(32.W))
@@ -193,5 +193,5 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 
 object Prefetch extends App {
   
-  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
+  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch2(32, 32)))
 }
