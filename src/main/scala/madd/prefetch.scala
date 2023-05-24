@@ -4,7 +4,7 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
-class ItemData(val pcWidth: Int,val addressWidth: Int,select:UInt) extends Bundle {
+class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val pc = UInt(pcWidth.W)
   val address = UInt(addressWidth.W)
   val timestamp = UInt(32.W)
