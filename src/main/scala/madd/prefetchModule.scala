@@ -43,7 +43,7 @@ class Prefetch_back(val pcWidth: Int,val addressWidth: Int) extends Module {
   //val stride = RegInit(0.U(addressWidth.W))
   //val reliability = RegInit(0.U(32.W))
   
-  val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
+  val queueWire = Wire(Vec(size,new ItemData_back(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
 	  queueWire(i).address:=0.U(addressWidth.W)
@@ -191,7 +191,7 @@ class Prefetch_back(val pcWidth: Int,val addressWidth: Int) extends Module {
   
 }
 
-object PrefetchModule extends App {
+object prefetchModule extends App {
   
   scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch_back(32, 32)))
 }
