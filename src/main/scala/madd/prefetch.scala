@@ -194,7 +194,7 @@ object Prefetch extends App {
   (new ChiselStage).execute(
     Array("-X", "verilog", "-td", "source/","-disable-all-randomization", "-strip-debug-info"),
     Seq(
-      ChiselGeneratorAnnotation(() => new Cache1())
+      ChiselGeneratorAnnotation(() => new Prefetch(32,32))
     )
   )
 }
