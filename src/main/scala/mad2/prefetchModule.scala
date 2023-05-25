@@ -1,4 +1,3 @@
-package mad2
 
 import chisel3._
 import chisel3.util._
@@ -205,16 +204,16 @@ class PrefetchIO(val pcWidth: Int,val addressWidth: Int) extends Bundle {
     new PrefetchIO(addressWidth, pcWidth).asInstanceOf[this.type]
 }
 object prefetchModule extends App {
-  println(
+  /*println(
     chisel3.stage.ChiselStage.emitSystemVerilog(
       new Prefetch(32, 32),
       Array("-disable-all-randomization", "-strip-debug-info")
     )
-  )
+  )*/
   /*(new chisel3.stage.ChiselStage).execute(
   Array("--target", "systemverilog"),
   Seq(ChiselGeneratorAnnotation(() => new Prefetch(32, 32)),
     FirtoolOption("--disable-all-randomization"))
   )*/
-  //scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
+  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
 }
