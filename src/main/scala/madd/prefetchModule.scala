@@ -3,7 +3,6 @@ package madd
 import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
-import circt.stage._
 
 class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val pc = UInt(pcWidth.W)
@@ -193,16 +192,16 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 }
 
 object prefetchModule extends App {
-  /*println(
+  println(
     chisel3.stage.ChiselStage.emitSystemVerilog(
       new Prefetch(32, 32),
-      firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info")
+      Array("-disable-all-randomization", "-strip-debug-info")
     )
-  )*/
-  (new chisel3.stage.ChiselStage).execute(
+  )
+  /*(new chisel3.stage.ChiselStage).execute(
   Array("--target", "systemverilog"),
   Seq(ChiselGeneratorAnnotation(() => new Prefetch(32, 32)),
-    FirtoolOption("--disable-all-randomization"))
+    FirtoolOption("--disable-all-randomization"))*/
   )
   //scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
 }
