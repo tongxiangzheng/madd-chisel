@@ -192,6 +192,11 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 }
 
 object prefetchModule extends App {
-  
-  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
+  println(
+    ChiselStage.emitVerilog(
+      new Prefetch(32, 32),
+      firtoolOpts = Array("-disable-all-randomization", "-strip-debug-info")
+    )
+  )
+  //scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
 }
