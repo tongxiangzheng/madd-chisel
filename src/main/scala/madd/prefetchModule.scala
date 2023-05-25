@@ -1,8 +1,10 @@
+package madd
+
 import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
-class ItemData_back(val pcWidth: Int,val addressWidth: Int) extends Bundle {
+class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val pc = UInt(pcWidth.W)
   val address = UInt(addressWidth.W)
   val timestamp = UInt(32.W)
@@ -27,7 +29,7 @@ class ItemData_back(val pcWidth: Int,val addressWidth: Int) extends Bundle {
 
   }
 }*/
-class Prefetch_back(val pcWidth: Int,val addressWidth: Int) extends Module {
+class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   val size = 8
   val dfn = RegInit(0.U(32.W))
@@ -41,7 +43,7 @@ class Prefetch_back(val pcWidth: Int,val addressWidth: Int) extends Module {
   //val stride = RegInit(0.U(addressWidth.W))
   //val reliability = RegInit(0.U(32.W))
   
-  val queueWire = Wire(Vec(size,new ItemData_back(pcWidth,addressWidth)))
+  val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
 	  queueWire(i).address:=0.U(addressWidth.W)
@@ -191,5 +193,5 @@ class Prefetch_back(val pcWidth: Int,val addressWidth: Int) extends Module {
 
 object prefetchModule extends App {
   
-  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch_back(32, 32)))
+  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
 }
