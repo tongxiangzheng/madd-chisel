@@ -190,8 +190,3 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   io.prefetch_address:=prefetch_address
   
 }
-
-object PrefetchModule extends App {
-  
-  scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
-}
