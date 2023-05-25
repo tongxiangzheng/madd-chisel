@@ -191,10 +191,10 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
 }
 object Prefetch extends App {
-  (new ChiselStage).execute(
+  println((new ChiselStage).execute(
     Array("-X", "verilog", "-td", "source/","-disable-all-randomization", "-strip-debug-info"),
     Seq(
       ChiselGeneratorAnnotation(() => new Prefetch(32,32))
     )
-  )
+  ))
 }
