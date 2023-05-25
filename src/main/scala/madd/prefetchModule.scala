@@ -201,7 +201,7 @@ object prefetchModule extends App {
   /*(new chisel3.stage.ChiselStage).execute(
   Array("--target", "systemverilog"),
   Seq(ChiselGeneratorAnnotation(() => new Prefetch(32, 32)),
-    FirtoolOption("--disable-all-randomization"))*/
-  )
+    FirtoolOption("--disable-all-randomization"))
+  )*/
   //scala.Predef.printf((new chisel3.stage.ChiselStage).emitVerilog(new Prefetch(32, 32)))
 }
