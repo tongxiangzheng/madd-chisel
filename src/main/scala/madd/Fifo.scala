@@ -50,8 +50,8 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
 
 //start
   init(io.reset)
-  fifoFind(io.pc)
-  fifoWrite(io.pc,io.writeAddress,io.writeStride,io.writeReliability,io.enableWrite)
+  fifoFind(io.findPC)
+  fifoWrite(io.writePC,io.writeAddress,io.writeStride,io.writeReliability,io.enableWrite)
 
 
 

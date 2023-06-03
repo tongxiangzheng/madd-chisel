@@ -25,9 +25,12 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
   val size = 8
   val fifo = Module(new Fifo(size,pcWidth,addressWidth))
-  
-
-
+  fifo.io.findPC:=0.U
+  fifo.io.enableWrite:=false.B
+  fifo.io.writePC:=DontCare
+  fifo.io.writeAddress:=DontCare
+  fifo.io.writeStride:=DontCare
+  fifo.io.writeReliability:=DontCare
 
   
   def calcReliability(stride:UInt,reliability:UInt,newStride:UInt):UInt={
@@ -56,7 +59,6 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
   //chisel3.printf(p"enable: ${enable} replace: ${replace} reliability: ${reliability} stride: ${stride} newStride: ${newStride} prereliability: ${prereliability}\n");
   
-  fifo.io.enableWrite:=false.B
   when(enable){
     enable=false.B
     fifoFind(io.pc)
@@ -90,11 +92,11 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   io.prefetch_address:=prefetch_address
   
   def fifoFind(pc: UInt):Unit = {
-    fifo.io.pc:=pc
+    fifo.io.findPC:=pc
     fifo.io.enableWrite:=false.B
   }
   def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability:UInt):Unit = {
-    fifo.io.pc:=pc
+    fifo.io.writePC:=pc
     //fifo.io.enableWrite:=true.B
     fifo.io.writeAddress:=address
     fifo.io.writeStride:=stride

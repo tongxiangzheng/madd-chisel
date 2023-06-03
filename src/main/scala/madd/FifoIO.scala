@@ -6,7 +6,8 @@ import chisel3.util._
 class FifoIO(val pcWidth: Int,val addressWidth: Int) extends Bundle {
     val reset = Input(Bool())
 
-    val pc = Input(UInt(pcWidth.W))
+    val findPC = Input(UInt(pcWidth.W))
+    val writePC = Input(UInt(pcWidth.W))
 
     val writeAddress = Input(UInt(addressWidth.W))
     val writeStride = Input(UInt(addressWidth.W))
