@@ -12,25 +12,10 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   //val haveStride = Bool()
   val reliability = UInt(32.W)
 }
-/*class GenTree(val prefetch:Prefetch,val pWidth:UInt,val p:Int,val size:Int,selector:UInt=>UInt=>UInt,checker:UInt=>Bool) extends Module{
-  val io = IO(new Bundle{
-    val p = Output(UInt(pWidth.W))
-    val found = Output(Bool)
-  })
-  if(size===1){
-    val check=checker(p)
-    io.found:=check
-    io.p:=p;
-  }else{
-    int halfSize=size/2
-    val l=new GenTree(prefetch,pWidth,p,halfSize,selector,checker)
-    val r=new GenTree(prefetch,pWidth,p+halfSize,halfSize,selector,checker)
-    val check=l.found|r.found
 
-  }
-}*/
 class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
+  
   val size = 8
   val dfn = RegInit(0.U(32.W))
   val lastPC_ = RegInit(0.U(pcWidth.W))
@@ -191,16 +176,16 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   
 }
 object Prefetch extends App {
-  /*println((new ChiselStage).execute(
+  println((new ChiselStage).execute(
     Array("-X", "verilog", "-td", "source/"),
     Seq(
       ChiselGeneratorAnnotation(() => new Prefetch(32,32))
     )
-  ))*/
-  println(
+  ))
+  /*println(
     chisel3.stage.ChiselStage.emitSystemVerilog(
       new Prefetch(32, 32),
       Array("-disable-all-randomization", "-strip-debug-info")
     )
-  )
+  )*/
 }
