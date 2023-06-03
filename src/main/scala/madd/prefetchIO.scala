@@ -13,7 +13,8 @@ class PrefetchIO(val pcWidth: Int,val addressWidth: Int) extends Bundle {
     val prefetch_address = Output(UInt(addressWidth.W))
     val prefetch_valid = Output(Bool())
     val ready = Output(Bool())
-    val inited = Output(Bool())
+    //val inited = Output(Bool())
+    
   override def cloneType =
     new PrefetchIO(addressWidth, pcWidth).asInstanceOf[this.type]
 }

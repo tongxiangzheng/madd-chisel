@@ -44,9 +44,10 @@ class PrefetchTester(dut: Prefetch)
     var access=0
     poke(dut.io.pc,0)
     poke(dut.io.reset, 1)
-    while(peek(dut.io.inited)==0){
-      step(1)
-    }
+    step(1)
+    poke(dut.io.reset, 0)
+    step(1)
+    
     
     
     for (j<- 0 until numAccesses){
@@ -92,9 +93,7 @@ class PrefetchTester(dut: Prefetch)
     scala.Predef.printf("-----------------\n");
 
     poke(dut.io.reset, 0)
-    while(peek(dut.io.inited)==1){
-      step(1)
-    }
+    
   }
 }
 
