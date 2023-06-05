@@ -1,0 +1,191 @@
+[info] welcome to sbt 1.4.9 (Ubuntu Java 11.0.19)
+[info] loading settings for project madd-chisel-build from plugins.sbt ...
+[info] loading project definition from /home/tong_xz/chisel/madd-chisel/project
+[info] loading settings for project root from build.sbt ...
+[info] set current project to madd-chisel-template (in build file:/home/tong_xz/chisel/madd-chisel/)
+[info] compiling 1 Scala source to /home/tong_xz/chisel/madd-chisel/target/scala-2.12/classes ...
+[info] running madd.PrefetchTester
+Elaborating design...
+Done elaborating.
+End of dependency graph
+Circuit state created
+[info] [0.001] SEED 1685928395723
+[Tester] pc: 1 address: 0 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 8 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 16 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 24 valid: 1 prefetch_address: 32
+[Tester] pc: 1 address: 32 valid: 1 prefetch_address: 40
+[Tester] pc: 1 address: 40 valid: 1 prefetch_address: 48
+[Tester] pc: 1 address: 48 valid: 1 prefetch_address: 56
+[Tester] pc: 1 address: 56 valid: 1 prefetch_address: 64
+[Tester] pc: 2 address: 64 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 72 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 80 valid: 1 prefetch_address: 88
+[Tester] pc: 2 address: 88 valid: 1 prefetch_address: 96
+[Tester] pc: 2 address: 96 valid: 1 prefetch_address: 104
+[Tester] pc: 2 address: 104 valid: 1 prefetch_address: 112
+[Tester] pc: 2 address: 112 valid: 1 prefetch_address: 120
+[Tester] pc: 2 address: 120 valid: 1 prefetch_address: 128
+[Tester] pc: 3 address: 128 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 136 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 144 valid: 1 prefetch_address: 152
+[Tester] pc: 3 address: 152 valid: 1 prefetch_address: 160
+[Tester] pc: 3 address: 160 valid: 1 prefetch_address: 168
+[Tester] pc: 3 address: 168 valid: 1 prefetch_address: 176
+[Tester] pc: 3 address: 176 valid: 1 prefetch_address: 184
+[Tester] pc: 3 address: 184 valid: 1 prefetch_address: 192
+[Tester] pc: 4 address: 192 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 200 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 208 valid: 1 prefetch_address: 216
+[Tester] pc: 4 address: 216 valid: 1 prefetch_address: 224
+[Tester] pc: 4 address: 224 valid: 1 prefetch_address: 232
+[Tester] pc: 4 address: 232 valid: 1 prefetch_address: 240
+[Tester] pc: 4 address: 240 valid: 1 prefetch_address: 248
+[Tester] pc: 4 address: 248 valid: 1 prefetch_address: 256
+[Tester] 测试集名称: pc小 address顺序
+缓存命中率: 0.6875 预取行动率: 0.71875 预取有效率 0.9565217391304348 预取产生的总收益率 0.6875
+-----------------
+[Tester] pc: 1 address: 0 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 8 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 16 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 24 valid: 0 prefetch_address: 0
+[Tester] pc: 5 address: 32 valid: 0 prefetch_address: 0
+[Tester] pc: 6 address: 40 valid: 0 prefetch_address: 0
+[Tester] pc: 7 address: 48 valid: 0 prefetch_address: 0
+[Tester] pc: 8 address: 56 valid: 0 prefetch_address: 0
+[Tester] pc: 9 address: 64 valid: 0 prefetch_address: 0
+[Tester] pc: 10 address: 72 valid: 0 prefetch_address: 0
+[Tester] pc: 11 address: 80 valid: 0 prefetch_address: 0
+[Tester] pc: 12 address: 88 valid: 0 prefetch_address: 0
+[Tester] pc: 13 address: 96 valid: 0 prefetch_address: 0
+[Tester] pc: 14 address: 104 valid: 0 prefetch_address: 0
+[Tester] pc: 15 address: 112 valid: 0 prefetch_address: 0
+[Tester] pc: 16 address: 120 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 128 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 136 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 144 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 152 valid: 0 prefetch_address: 0
+[Tester] pc: 5 address: 160 valid: 0 prefetch_address: 0
+[Tester] pc: 6 address: 168 valid: 0 prefetch_address: 0
+[Tester] pc: 7 address: 176 valid: 0 prefetch_address: 0
+[Tester] pc: 8 address: 184 valid: 0 prefetch_address: 0
+[Tester] pc: 9 address: 192 valid: 0 prefetch_address: 0
+[Tester] pc: 10 address: 200 valid: 0 prefetch_address: 0
+[Tester] pc: 11 address: 208 valid: 0 prefetch_address: 0
+[Tester] pc: 12 address: 216 valid: 0 prefetch_address: 0
+[Tester] pc: 13 address: 224 valid: 0 prefetch_address: 0
+[Tester] pc: 14 address: 232 valid: 0 prefetch_address: 0
+[Tester] pc: 15 address: 240 valid: 0 prefetch_address: 0
+[Tester] pc: 16 address: 248 valid: 0 prefetch_address: 0
+[Tester] 测试集名称: pc大范围交错 address顺序
+缓存命中率: 0.0 预取行动率: 0.0 预取有效率 NaN 预取产生的总收益率 0.0
+-----------------
+[Tester] pc: 1 address: 60 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 48 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 83 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 56 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 83 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 51 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 27 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 19 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 55 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 81 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 37 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 66 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 72 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 1 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 19 valid: 0 prefetch_address: 0
+[Tester] pc: 2 address: 52 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 33 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 20 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 65 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 6 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 88 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 62 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 67 valid: 0 prefetch_address: 0
+[Tester] pc: 3 address: 86 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 86 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 22 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 17 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 35 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 15 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 96 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 42 valid: 0 prefetch_address: 0
+[Tester] pc: 4 address: 61 valid: 0 prefetch_address: 0
+[Tester] 测试集名称: address完全随机
+缓存命中率: 0.09375 预取行动率: 0.0 预取有效率 NaN 预取产生的总收益率 0.0
+-----------------
+[Tester] pc: 2 address: 0 valid: 0 prefetch_address: 0
+[Tester] pc: 54 address: 8 valid: 0 prefetch_address: 0
+[Tester] pc: 92 address: 16 valid: 0 prefetch_address: 0
+[Tester] pc: 12 address: 24 valid: 0 prefetch_address: 0
+[Tester] pc: 87 address: 32 valid: 0 prefetch_address: 0
+[Tester] pc: 85 address: 40 valid: 0 prefetch_address: 0
+[Tester] pc: 31 address: 48 valid: 0 prefetch_address: 0
+[Tester] pc: 82 address: 56 valid: 0 prefetch_address: 0
+[Tester] pc: 94 address: 64 valid: 0 prefetch_address: 0
+[Tester] pc: 63 address: 72 valid: 0 prefetch_address: 0
+[Tester] pc: 52 address: 80 valid: 0 prefetch_address: 0
+[Tester] pc: 55 address: 88 valid: 0 prefetch_address: 0
+[Tester] pc: 81 address: 96 valid: 0 prefetch_address: 0
+[Tester] pc: 45 address: 104 valid: 0 prefetch_address: 0
+[Tester] pc: 78 address: 112 valid: 0 prefetch_address: 0
+[Tester] pc: 36 address: 120 valid: 0 prefetch_address: 0
+[Tester] pc: 26 address: 128 valid: 0 prefetch_address: 0
+[Tester] pc: 41 address: 136 valid: 0 prefetch_address: 0
+[Tester] pc: 70 address: 144 valid: 0 prefetch_address: 0
+[Tester] pc: 30 address: 152 valid: 0 prefetch_address: 0
+[Tester] pc: 39 address: 160 valid: 0 prefetch_address: 0
+[Tester] pc: 85 address: 168 valid: 0 prefetch_address: 0
+[Tester] pc: 36 address: 176 valid: 0 prefetch_address: 0
+[Tester] pc: 60 address: 184 valid: 0 prefetch_address: 0
+[Tester] pc: 59 address: 192 valid: 0 prefetch_address: 0
+[Tester] pc: 52 address: 200 valid: 0 prefetch_address: 0
+[Tester] pc: 78 address: 208 valid: 0 prefetch_address: 0
+[Tester] pc: 41 address: 216 valid: 0 prefetch_address: 0
+[Tester] pc: 86 address: 224 valid: 0 prefetch_address: 0
+[Tester] pc: 6 address: 232 valid: 0 prefetch_address: 0
+[Tester] pc: 7 address: 240 valid: 0 prefetch_address: 0
+[Tester] pc: 61 address: 248 valid: 0 prefetch_address: 0
+[Tester] 测试集名称: pc随机
+缓存命中率: 0.0 预取行动率: 0.0 预取有效率 NaN 预取产生的总收益率 0.0
+-----------------
+[Tester] pc: 1 address: 0 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 1 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 2 valid: 1 prefetch_address: 3
+[Tester] pc: 1 address: 3 valid: 1 prefetch_address: 4
+[Tester] pc: 1 address: 4 valid: 1 prefetch_address: 5
+[Tester] pc: 1 address: 5 valid: 1 prefetch_address: 6
+[Tester] pc: 1 address: 6 valid: 1 prefetch_address: 7
+[Tester] pc: 1 address: 7 valid: 1 prefetch_address: 8
+[Tester] pc: 1 address: 16 valid: 1 prefetch_address: 17
+[Tester] pc: 1 address: 18 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 20 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 22 valid: 1 prefetch_address: 24
+[Tester] pc: 1 address: 24 valid: 1 prefetch_address: 26
+[Tester] pc: 1 address: 26 valid: 1 prefetch_address: 28
+[Tester] pc: 1 address: 28 valid: 1 prefetch_address: 30
+[Tester] pc: 1 address: 30 valid: 1 prefetch_address: 32
+[Tester] pc: 1 address: 48 valid: 1 prefetch_address: 50
+[Tester] pc: 1 address: 51 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 54 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 57 valid: 1 prefetch_address: 60
+[Tester] pc: 1 address: 60 valid: 1 prefetch_address: 63
+[Tester] pc: 1 address: 63 valid: 1 prefetch_address: 66
+[Tester] pc: 1 address: 66 valid: 1 prefetch_address: 69
+[Tester] pc: 1 address: 69 valid: 1 prefetch_address: 72
+[Tester] pc: 1 address: 96 valid: 1 prefetch_address: 99
+[Tester] pc: 1 address: 100 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 104 valid: 0 prefetch_address: 0
+[Tester] pc: 1 address: 108 valid: 1 prefetch_address: 112
+[Tester] pc: 1 address: 112 valid: 1 prefetch_address: 116
+[Tester] pc: 1 address: 116 valid: 1 prefetch_address: 120
+[Tester] pc: 1 address: 120 valid: 1 prefetch_address: 124
+[Tester] pc: 1 address: 124 valid: 1 prefetch_address: 128
+[Tester] 测试集名称: address 步长变化
+缓存命中率: 0.53125 预取行动率: 0.75 预取有效率 0.7083333333333334 预取产生的总收益率 0.53125
+-----------------
+test Prefetch Success: 0 tests passed in 653 cycles taking 0.708809 seconds
+
+[info] [0.700] RAN 648 CYCLES PASSED
+[success] Total time: 6 s, completed Jun 5, 2023, 9:26:38 AM
