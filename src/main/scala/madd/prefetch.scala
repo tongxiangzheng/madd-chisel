@@ -97,7 +97,7 @@ class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   }
   def fifoWrite(pc:UInt,address:UInt,stride:UInt,reliability:UInt):Unit = {
     fifo.io.writePC:=pc
-    //fifo.io.enableWrite:=true.B
+    fifo.io.enableWrite:=true.B
     fifo.io.writeAddress:=address
     fifo.io.writeStride:=stride
     fifo.io.writeReliability:=reliability

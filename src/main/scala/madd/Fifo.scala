@@ -58,7 +58,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
   def init(enable:Bool):Unit={
     for (i <- 0 until size) {
 	    queueReg(i).pc:=Mux(enable,0.U,queueReg(i).pc)
-	    queueReg(i).address:=Mux(enable,0.U,queueReg(i).pc)
+	    queueReg(i).address:=Mux(enable,0.U,queueReg(i).address)
 	    queueReg(i).stride:=Mux(enable,0.U,queueReg(i).stride)
       queueReg(i).reliability:=Mux(enable,0.U,queueReg(i).reliability)
       queueReg(i).timestamp:=Mux(enable,0.U,queueReg(i).timestamp)
@@ -73,7 +73,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
       val check=(queueReg(i).pc===pc)
       p=Mux(check,i.U,p)
       chisel3.printf(
-        p"find: ${i} queueReg(i).pc ${queueReg(i).pc} check: ${check} p: ${p}\n"
+        p"find: ${i} queueReg(i).pc: ${queueReg(i).pc} check: ${check} p: ${p}\n"
       )
     }
     val found = p =/= size.U
@@ -118,12 +118,13 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
     chisel3.printf(
       p"write: found: ${found} p: ${p} enable: ${enable}\n"
     )
-    queueReg(p).pc:=Mux(enable,queueReg(p).pc,pc)
-    queueReg(p).address:=Mux(enable,queueReg(p).address,address)
-    queueReg(p).stride:=Mux(enable,queueReg(p).stride,stride)
+    queueReg(p).pc:=Mux(enable,pc,queueReg(p).pc)
+    queueReg(p).address:=Mux(enable,address,queueReg(p).address)
+    queueReg(p).stride:=Mux(enable,stride,queueReg(p).stride)
     //queueReg(p).haveStride:=haveStride
-    queueReg(p).reliability:=Mux(enable,queueReg(p).reliability,reliability)
-    dfn:=Mux(enable,dfn+1.U,dfn)
-    queueReg(p).timestamp:=Mux(enable,queueReg(p).timestamp,dfn)
+    queueReg(p).reliability:=Mux(enable,reliability,queueReg(p).reliability)
+    val nextDfn=dfn+1.U
+    dfn:=Mux(enable,nextDfn,dfn)
+    queueReg(p).timestamp:=Mux(enable,nextDfn,queueReg(p).timestamp)
   }
 }
