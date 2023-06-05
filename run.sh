@@ -1,1 +1,1 @@
-sbt "runMain madd.Prefetch"
+sbt "runMain madd.PrefetchTester"

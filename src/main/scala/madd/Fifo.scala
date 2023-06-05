@@ -72,9 +72,9 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
     for(i <- 0 until size){
       val check=(queueReg(i).pc===pc)
       p=Mux(check,i.U,p)
-      /*chisel3.printf(
+      chisel3.printf(
         p"find: ${i} queueReg(i).pc ${queueReg(i).pc} check: ${check} p: ${p}\n"
-      )*/
+      )
     }
     val found = p =/= size.U
     io.found:=found
@@ -115,9 +115,9 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
       val select=Mux(found,false.B,check)
       p=Mux(select,i.U,p)
     }
-    /*chisel3.printf(
-      p"write: found: ${found} p: ${p}\n"
-    )*/
+    chisel3.printf(
+      p"write: found: ${found} p: ${p} enable: ${enable}\n"
+    )
     queueReg(p).pc:=Mux(enable,queueReg(p).pc,pc)
     queueReg(p).address:=Mux(enable,queueReg(p).address,address)
     queueReg(p).stride:=Mux(enable,queueReg(p).stride,stride)
