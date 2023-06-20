@@ -26,6 +26,16 @@ import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
     }
   }
 }*/
+
+class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
+  val pc = UInt(pcWidth.W)
+  val address = UInt(addressWidth.W)
+  val timestamp = UInt(32.W)
+	val stride = UInt(addressWidth.W)
+  //val haveStride = Bool()
+  val reliability = UInt(32.W)
+  val used = Bool()
+}
 class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module {
 	val io = IO(new FifoIO(pcWidth,addressWidth))
   
@@ -43,6 +53,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
 	  queueWire(i).stride:=0.U(addressWidth.W)
     queueWire(i).reliability:=0.U(addressWidth.W)
     queueWire(i).timestamp:=0.U(32.W)
+    queueWire(i).used:=false.B
     //queueWire(i).haveStride:=false.B
     
   }
@@ -62,6 +73,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
 	    queueReg(i).stride:=Mux(enable,0.U,queueReg(i).stride)
       queueReg(i).reliability:=Mux(enable,0.U,queueReg(i).reliability)
       queueReg(i).timestamp:=Mux(enable,0.U,queueReg(i).timestamp)
+      queueWire(i).used:=Mux(enable,false.B,queueReg(i).used)
       //queueReg(i).haveStride:=false.B
     }
     dfn:=Mux(enable,0.U,dfn)
@@ -70,7 +82,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
     var p=size.U
     //var found=false.B
     for(i <- 0 until size){
-      val check=(queueReg(i).pc===pc)
+      val check=(queueReg(i).used & queueReg(i).pc===pc)
       p=Mux(check,i.U,p)
       /*chisel3.printf(
         p"find: ${i} queueReg(i).pc: ${queueReg(i).pc} check: ${check} p: ${p}\n"
@@ -98,7 +110,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
 
     //是否有空位
     for(i <- 0 until size){
-      val check=(queueReg(i).pc===0.U)
+      val check=(queueReg(i).used===false.B)
       /*chisel3.printf(
         p"check2: p: ${p} queueReg(i).pc: ${queueReg(i).pc}\n"
       )*/
@@ -123,6 +135,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
     queueReg(p).stride:=Mux(enable,stride,queueReg(p).stride)
     //queueReg(p).haveStride:=haveStride
     queueReg(p).reliability:=Mux(enable,reliability,queueReg(p).reliability)
+    queueReg(p).used:=Mux(enable,true.B,queueReg(p).reliability)
     val nextDfn=dfn+1.U
     dfn:=Mux(enable,nextDfn,dfn)
     queueReg(p).timestamp:=Mux(enable,nextDfn,queueReg(p).timestamp)

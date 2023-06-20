@@ -8,7 +8,7 @@ import scala.collection.mutable.Set
 import chisel3.stage.ChiselGeneratorAnnotation
 import chisel3.stage.ChiselStage
 
-class PrefetchTester(dut: Prefetch)
+class StridePrefetchTester(dut: StridePrefetch)
     extends PeekPokeTester(dut) {
       
   val numAccesses = 32
@@ -97,9 +97,9 @@ class PrefetchTester(dut: Prefetch)
   }
 }
 
-object PrefetchTester extends App {
+object StridePrefetchTester extends App {
   
-  chisel3.iotesters.Driver(() => new Prefetch(32, 32)) { dut =>
-    new PrefetchTester(dut)
+  chisel3.iotesters.Driver(() => new StridePrefetch(32, 32)) { dut =>
+    new StridePrefetchTester(dut)
   }
 }

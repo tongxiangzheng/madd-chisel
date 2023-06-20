@@ -4,16 +4,8 @@ import chisel3._
 import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
-class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
-  val pc = UInt(pcWidth.W)
-  val address = UInt(addressWidth.W)
-  val timestamp = UInt(32.W)
-	val stride = UInt(addressWidth.W)
-  //val haveStride = Bool()
-  val reliability = UInt(32.W)
-}
 
-class Prefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
+class StridePrefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   
   val dfn = RegInit(0.U(32.W))
@@ -107,7 +99,7 @@ object Prefetch extends App {
   println((new ChiselStage).execute(
     Array("-X", "verilog", "-td", "source/"),
     Seq(
-      ChiselGeneratorAnnotation(() => new Prefetch(32,32))
+      ChiselGeneratorAnnotation(() => new StridePrefetch(32,32))
     )
   ))
   /*println(
