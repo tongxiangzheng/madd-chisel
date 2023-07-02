@@ -73,7 +73,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
 	    queueReg(i).stride:=Mux(enable,0.U,queueReg(i).stride)
       queueReg(i).reliability:=Mux(enable,0.U,queueReg(i).reliability)
       queueReg(i).timestamp:=Mux(enable,0.U,queueReg(i).timestamp)
-      queueWire(i).used:=Mux(enable,false.B,queueReg(i).used)
+      queueReg(i).used:=Mux(enable,false.B,queueReg(i).used)
       //queueReg(i).haveStride:=false.B
     }
     dfn:=Mux(enable,0.U,dfn)

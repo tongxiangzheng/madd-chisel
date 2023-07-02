@@ -9,11 +9,9 @@ class StridePrefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val io = IO(new PrefetchIO(pcWidth,addressWidth))
   
   val dfn = RegInit(0.U(32.W))
-  val lastPC_ = RegInit(0.U(pcWidth.W))
   val prefetch_valid = RegInit(false.B)
   val prefetch_address = RegInit(0.U(addressWidth.W))
   val ready = RegInit(false.B)
-  val inited = RegInit(false.B)
   
   val size = 8
   val fifo = Module(new Fifo(size,pcWidth,addressWidth))
@@ -95,7 +93,7 @@ class StridePrefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
     fifo.io.writeReliability:=reliability
   }
 }
-object Prefetch extends App {
+object StridePrefetch extends App {
   println((new ChiselStage).execute(
     Array("-X", "verilog", "-td", "source/"),
     Seq(
