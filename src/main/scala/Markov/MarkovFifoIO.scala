@@ -3,7 +3,7 @@ package markov
 import chisel3._
 import chisel3.util._
 
-class FifoIO(val addressWidth: Int) extends Bundle {
+class MarkovFifoIO(val addressWidth: Int) extends Bundle {
     val reset = Input(Bool())
 
     val findAddress = Input(UInt(addressWidth.W))
@@ -21,5 +21,5 @@ class FifoIO(val addressWidth: Int) extends Bundle {
     val foundTransitions = Output(UInt(addressWidth.W))
 
   override def cloneType =
-    new FifoIO(addressWidth).asInstanceOf[this.type]
+    new MarkovFifoIO(addressWidth).asInstanceOf[this.type]
 }

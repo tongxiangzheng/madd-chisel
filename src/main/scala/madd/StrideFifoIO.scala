@@ -3,7 +3,7 @@ package madd
 import chisel3._
 import chisel3.util._
 
-class FifoIO(val pcWidth: Int,val addressWidth: Int) extends Bundle {
+class StrideFifoIO(val pcWidth: Int,val addressWidth: Int) extends Bundle {
     val reset = Input(Bool())
 
     val findPC = Input(UInt(pcWidth.W))
@@ -20,5 +20,5 @@ class FifoIO(val pcWidth: Int,val addressWidth: Int) extends Bundle {
     val foundReliability = Output(UInt(addressWidth.W))
 
   override def cloneType =
-    new FifoIO(addressWidth, pcWidth).asInstanceOf[this.type]
+    new StrideFifoIO(addressWidth, pcWidth).asInstanceOf[this.type]
 }

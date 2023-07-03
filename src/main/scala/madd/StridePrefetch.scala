@@ -14,7 +14,7 @@ class StridePrefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val ready = RegInit(false.B)
   
   val size = 8
-  val fifo = Module(new Fifo(size,pcWidth,addressWidth))
+  val fifo = Module(new StrideFifo(size,pcWidth,addressWidth))
   fifo.io.findPC:=0.U
   fifo.io.enableWrite:=false.B
   fifo.io.writePC:=DontCare

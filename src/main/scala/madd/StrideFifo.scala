@@ -27,7 +27,7 @@ import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
   }
 }*/
 
-class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
+class StrideItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val pc = UInt(pcWidth.W)
   val address = UInt(addressWidth.W)
   val timestamp = UInt(32.W)
@@ -36,8 +36,8 @@ class ItemData(val pcWidth: Int,val addressWidth: Int) extends Bundle {
   val reliability = UInt(32.W)
   val used = Bool()
 }
-class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module {
-	val io = IO(new FifoIO(pcWidth,addressWidth))
+class StrideFifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module {
+	val io = IO(new StrideFifoIO(pcWidth,addressWidth))
   
   val dfn = RegInit(0.U(32.W))
   val ready = RegInit(false.B)
@@ -46,7 +46,7 @@ class Fifo(val size: Int,val pcWidth: Int,val addressWidth: Int) extends Module 
   //val stride = RegInit(0.U(addressWidth.W))
   //val reliability = RegInit(0.U(32.W))
   
-  val queueWire = Wire(Vec(size,new ItemData(pcWidth,addressWidth)))
+  val queueWire = Wire(Vec(size,new StrideItemData(pcWidth,addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).pc:=0.U(pcWidth.W)
 	  queueWire(i).address:=0.U(addressWidth.W)

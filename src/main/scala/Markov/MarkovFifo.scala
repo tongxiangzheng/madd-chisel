@@ -5,15 +5,15 @@ import chisel3.util._
 import chisel3.stage.{ChiselStage, ChiselGeneratorAnnotation}
 
 
-class ItemData(val addressWidth: Int) extends Bundle {
+class MarkovItemData(val addressWidth: Int) extends Bundle {
   val address = UInt(addressWidth.W)
   val nextAddress = UInt(addressWidth.W)
 	val transitions = UInt(32.W)
   val timestamp = UInt(32.W)
   val used = Bool()
 }
-class Fifo(val size: Int,val addressWidth: Int) extends Module {
-	val io = IO(new FifoIO(addressWidth))
+class MarkovFifo(val size: Int,val addressWidth: Int) extends Module {
+	val io = IO(new MarkovFifoIO(addressWidth))
   
   val dfn = RegInit(0.U(32.W))
   val ready = RegInit(false.B)
@@ -22,7 +22,7 @@ class Fifo(val size: Int,val addressWidth: Int) extends Module {
   //val stride = RegInit(0.U(addressWidth.W))
   //val reliability = RegInit(0.U(32.W))
   
-  val queueWire = Wire(Vec(size,new ItemData(addressWidth)))
+  val queueWire = Wire(Vec(size,new MarkovItemData(addressWidth)))
   for (i <- 0 until size) {
 	  queueWire(i).address:=0.U(addressWidth.W)
 	  queueWire(i).nextAddress:=0.U(addressWidth.W)
@@ -62,6 +62,9 @@ class Fifo(val size: Int,val addressWidth: Int) extends Module {
         p"find: ${i} queueReg(i).pc: ${queueReg(i).pc} check: ${check} p: ${p}\n"
       )*/
     }
+    /*chisel3.printf(
+      p"find: found: ${found} p: ${p} address: ${address},${queueReg(p).address} nextAddress: ${queueReg(p).nextAddress} transitions: ${queueReg(p).transitions}\n"
+    )*/
     io.found:=found
     io.foundNextAddress:=Mux(found,queueReg(p).nextAddress,0.U)
     io.foundTransitions:=Mux(found,queueReg(p).transitions,0.U)
@@ -103,7 +106,7 @@ class Fifo(val size: Int,val addressWidth: Int) extends Module {
       p=Mux(select,i.U,p)
     }
     /*chisel3.printf(
-      p"write: found: ${found} p: ${p} enable: ${enable} inc: ${inc} queueReg(p).transitions: ${queueReg(p).transitions}\n"
+      p"write: found: ${found} p: ${p} enable: ${enable} inc: ${inc} queueReg(p).address ${queueReg(p).address} queueReg(p).nextAddress ${queueReg(p).nextAddress} queueReg(p).transitions: ${queueReg(p).transitions}\n"
     )*/
     
 	  queueReg(p).address:=Mux(enable,address,queueReg(p).address)

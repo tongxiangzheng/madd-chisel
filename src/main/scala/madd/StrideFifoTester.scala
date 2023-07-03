@@ -8,7 +8,7 @@ import scala.collection.mutable.Set
 import chisel3.stage.ChiselGeneratorAnnotation
 import chisel3.stage.ChiselStage
 
-class FifoTester(dut: Fifo)
+class StrideFifoTester(dut: StrideFifo)
     extends PeekPokeTester(dut) {
       
   poke(dut.io.reset,1)
@@ -36,9 +36,9 @@ class FifoTester(dut: Fifo)
   poke(dut.io.foundReliability,6)
 }
 
-object FifoTester extends App {
+object StrideFifoTester extends App {
   
-  chisel3.iotesters.Driver(() => new Fifo(8,32, 32)) { dut =>
-    new FifoTester(dut)
+  chisel3.iotesters.Driver(() => new StrideFifo(8,32, 32)) { dut =>
+    new StrideFifoTester(dut)
   }
 }

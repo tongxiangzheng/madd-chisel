@@ -11,13 +11,15 @@ class MarkovPrefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
   val prefetch_valid = RegInit(false.B)
   val prefetch_address = RegInit(0.U(addressWidth.W))
   val ready = RegInit(false.B)
+  val inited = RegInit(false.B)
 
   val lastAddress = RegInit(0.U(addressWidth.W))
   
-  val size = 8
-  val fifo = Module(new Fifo(size,addressWidth))
+  val size = 128
+  val fifo = Module(new MarkovFifo(size,addressWidth))
 
-  fifo.io.findAddress:=0.U
+  //fifo.io.findAddress:=0.U
+  fifo.io.writeAddress:=0.U
   fifo.io.enableWrite:=false.B
   fifo.io.nextAddress:=DontCare
 
@@ -25,33 +27,18 @@ class MarkovPrefetch(val pcWidth: Int,val addressWidth: Int) extends Module {
 
 //start
   fifo.io.reset:=io.reset
+  inited:=Mux(io.reset,true.B,inited)
   var enable = io.enable & !RegNext(io.enable)
-  //unblock:=Mux(io.enable,false.B,true.B)
   
-  //val stride = RegInit(0.U(addressWidth.W))
-  //val newStride = RegInit(0.U(addressWidth.W))
-  //val reliability = RegInit(0.U(32.W))
-  //val prereliability = RegInit(0.U(32.W))
-  //val replace = RegInit(false.B)
-  //chisel3.printf(p"0 pc: ${queueReg(0).pc} address: ${queueReg(0).address} stride: ${queueReg(0).stride} reliability: ${queueReg(0).reliability} \n");
-  //chisel3.printf(p"io.enable: ${io.enable} unblock: ${unblock} \n");
-  
-  //chisel3.printf(p"enable: ${enable} replace: ${replace} reliability: ${reliability} stride: ${stride} newStride: ${newStride} prereliability: ${prereliability}\n");
-  
-  when(enable){
-    enable=false.B
-    fifoFind(io.address)
-    var found = fifo.io.found
+  fifoFind(io.address)
+  var found = fifo.io.found
 
-    prefetch_valid:=found
-    prefetch_address:=Mux(found,fifo.io.nextAddress,0.U)
-    fifoWrite(lastAddress,io.address,found)
-    
-    lastAddress:=io.address
-    /*chisel3.printf(
-      p"write: p: ${p} pc: ${io.pc} reliability: ${reliability}\n"
-    )*/
-  }
+  prefetch_valid:=Mux(enable,found,prefetch_valid)
+  prefetch_address:=Mux(enable,Mux(found,fifo.io.foundNextAddress,0.U),prefetch_address);
+  fifoWrite(lastAddress,io.address,Mux(enable,!inited,false.B))
+  inited:=Mux(enable,false.B,inited)
+  lastAddress:=Mux(enable,io.address,lastAddress)
+
 
   ready:=io.enable
   io.ready:=RegNext(ready)
